@@ -67,13 +67,11 @@ const Header: React.FC = () => {
             >
               Contact
             </a>
-          </nav>
-
-          {/* Contact Info & CTA */}
+          </nav>          {/* Contact Info & CTA */}
           <div className="hidden lg:flex items-center space-x-4">
             <div className="text-right">
-              <p className="text-sm text-gray-600">Call Us Now</p>
-              <p className="font-bold text-gray-900">+1 (555) 123-4567</p>
+              <p className="text-sm text-gray-600">Call Randika</p>
+              <p className="font-bold text-gray-900">071 472 7813</p>
             </div>
             <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md">
               Get Quote
@@ -150,9 +148,9 @@ const Header: React.FC = () => {
                 className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
               >
                 Contact
-              </a>
-              <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-600 mb-2">Call Us: +1 (555) 123-4567</p>
+              </a>              <div className="pt-4 border-t border-gray-200">
+                <p className="text-sm text-gray-600 mb-2">Call Randika: 071 472 7813</p>
+                <p className="text-sm text-gray-600 mb-2">Call Yushan: 076 396 2388</p>
                 <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
                   Get Quote
                 </button>
