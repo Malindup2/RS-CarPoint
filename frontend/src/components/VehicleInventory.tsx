@@ -202,9 +202,16 @@ const VehicleInventory: React.FC = () => {
 
   return (
     <section className="py-8 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div className="text-center mb-8">
+      <div className="container mx-auto px-4">        {/* Section Header */}
+        <div className="text-center mb-8">          {/* Logo */}
+          <div className="flex justify-center mb-6">
+            <img 
+              src={require('../assets/rs.jpg')} 
+              alt="RS Car Point Logo" 
+              className="h-20 w-auto object-contain rounded-lg"
+            />
+          </div>
+          
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
             Browse Our Vehicle Collection
           </h2>

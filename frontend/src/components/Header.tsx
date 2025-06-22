@@ -6,26 +6,17 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white shadow-lg border-b-2 border-blue-600">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center py-4">
-          {/* Logo and Company Name */}
+        <div className="flex justify-between items-center py-4">          {/* Logo and Company Name */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <svg
-                className="w-8 h-8 text-white"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <div>
+            <div className="w-14 h-14 rounded-lg overflow-hidden">
+              <img 
+                src={require('../assets/rs.jpg')} 
+                alt="RS Car Point Logo" 
+                className="w-full h-full object-cover"
+              />
+            </div>            <div>
               <h1 className="text-2xl font-bold text-gray-900">RS Car Point</h1>
-              <p className="text-sm text-gray-600">Premium Vehicle Sales</p>
+              <p className="text-sm text-gray-600">Where Your Choice</p>
             </div>
           </div>
 
