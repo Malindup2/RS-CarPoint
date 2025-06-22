@@ -15,8 +15,7 @@ const CallToAction: React.FC = () => {
               Don't wait any longer. Our team of experts is ready to help you find 
               the perfect vehicle that fits your needs and budget. Get started today!
             </p>
-            
-            <div className="space-y-4 mb-8">
+              <div className="space-y-4 mb-8">
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
@@ -31,7 +30,7 @@ const CallToAction: React.FC = () => {
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 </div>
-                <span className="text-blue-100">Competitive financing options available</span>
+                <span className="text-blue-100">Competitive leasing through trusted partners</span>
               </div>
               <div className="flex items-center space-x-3">
                 <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
@@ -40,8 +39,7 @@ const CallToAction: React.FC = () => {
                   </svg>
                 </div>
                 <span className="text-blue-100">Trade-in evaluations and assistance</span>
-              </div>
-            </div>
+              </div>            </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-lg">
@@ -92,9 +90,7 @@ const CallToAction: React.FC = () => {
                   className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="john@example.com"
                 />
-              </div>
-
-              <div>
+              </div>              <div>
                 <label htmlFor="phone" className="block text-sm font-medium text-blue-100 mb-2">
                   Phone Number
                 </label>
@@ -102,7 +98,7 @@ const CallToAction: React.FC = () => {
                   type="tel"
                   id="phone"
                   className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="(555) 123-4567"
+                  placeholder="071 234 5678"
                 />
               </div>
 
@@ -115,12 +111,10 @@ const CallToAction: React.FC = () => {
                   className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="" className="text-gray-900">Select vehicle type</option>
-                  <option value="sedan" className="text-gray-900">Sedan</option>
-                  <option value="suv" className="text-gray-900">SUV</option>
-                  <option value="truck" className="text-gray-900">Truck</option>
-                  <option value="coupe" className="text-gray-900">Coupe</option>
-                  <option value="convertible" className="text-gray-900">Convertible</option>
-                  <option value="electric" className="text-gray-900">Electric</option>
+                  <option value="car" className="text-gray-900">Car</option>
+                  <option value="bike" className="text-gray-900">Motorcycle</option>
+                  <option value="scooter" className="text-gray-900">Scooter</option>
+                  <option value="threewheeler" className="text-gray-900">Three Wheeler</option>
                 </select>
               </div>
 
@@ -131,13 +125,13 @@ const CallToAction: React.FC = () => {
                 <select
                   id="budget"
                   className="w-full px-4 py-2 rounded-lg bg-white bg-opacity-20 border border-white border-opacity-30 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="" className="text-gray-900">Select budget range</option>
-                  <option value="under-20k" className="text-gray-900">Under $20,000</option>
-                  <option value="20k-30k" className="text-gray-900">$20,000 - $30,000</option>
-                  <option value="30k-50k" className="text-gray-900">$30,000 - $50,000</option>
-                  <option value="50k-75k" className="text-gray-900">$50,000 - $75,000</option>
-                  <option value="over-75k" className="text-gray-900">Over $75,000</option>
+                >                  <option value="" className="text-gray-900">Select budget range</option>
+                  <option value="under-500k" className="text-gray-900">Under LKR 5 Lks</option>
+                  <option value="500k-1m" className="text-gray-900">LKR 5-10 Lks</option>
+                  <option value="1m-3m" className="text-gray-900">LKR 10-30 Lks</option>
+                  <option value="3m-5m" className="text-gray-900">LKR 30-50 Lks</option>
+                  <option value="5m-1cr" className="text-gray-900">LKR 50 Lks - 1 Cr</option>
+                  <option value="over-1cr" className="text-gray-900">Over LKR 1 Cr</option>
                 </select>
               </div>
 
