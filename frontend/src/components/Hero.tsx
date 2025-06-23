@@ -48,14 +48,13 @@ const Hero: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.9 }}
-              >
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105">
+              >                <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 shadow-lg transform hover:scale-105">
                   Browse Vehicles
                 </button>
                 <button className="border-2 border-white text-white hover:bg-white hover:text-gray-900 font-bold py-3 px-6 rounded-lg transition duration-300 transform hover:scale-105">
                   Contact Us
                 </button>
-              </div>              {/* Contact Info */}
+              </motion.div>{/* Contact Info */}
               <motion.div 
                 className="flex flex-col sm:flex-row gap-4 text-white justify-center items-center"
                 initial={{ opacity: 0, y: 20 }}
