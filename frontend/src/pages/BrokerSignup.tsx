@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate, Link } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const BrokerSignup: React.FC = () => {  const [formData, setFormData] = useState({
+const BrokerSignup: React.FC = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     telephone: '',
@@ -18,12 +21,14 @@ const BrokerSignup: React.FC = () => {  const [formData, setFormData] = useState
       ...prev,
       [name]: value
     }));
-  };
-  const handleSubmit = (e: React.FormEvent) => {
+  };  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
     console.log('Partner sign-up submitted:', formData);
     // You can add API call or other logic here
+    
+    // Redirect to login page after successful signup
+    navigate('/login');
   };
 
   return (    <div className="min-h-screen bg-gray-50">
@@ -149,9 +154,8 @@ const BrokerSignup: React.FC = () => {  const [formData, setFormData] = useState
                         className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                       >
                         Create Partner Account
-                      </button>
-                      <p className="text-sm text-gray-600 mt-3 text-center">
-                        Already have an account? <a href="#" className="text-blue-600 hover:text-blue-700 font-medium">Sign In</a>
+                      </button>                      <p className="text-sm text-gray-600 mt-3 text-center">
+                        Already have an account? <Link to="/login" className="text-blue-600 hover:text-blue-700 font-medium">Sign In</Link>
                       </p>
                     </div>
                   </form>

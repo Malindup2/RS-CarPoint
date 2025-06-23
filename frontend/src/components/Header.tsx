@@ -24,7 +24,6 @@ const Header: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </div>            <div>
-              <h1 className="text-2xl font-bold text-gray-900">RS Car Point</h1>
               <p className="text-sm text-gray-600">Where Your Choice</p>
             </div>
           </div>          {/* Desktop Navigation */}
