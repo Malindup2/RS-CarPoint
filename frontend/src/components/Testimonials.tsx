@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Testimonials: React.FC = () => {
   const testimonials = [
@@ -84,12 +85,23 @@ const Testimonials: React.FC = () => {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6 rounded-full"></div>
         </div>        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial) => (
-            <div
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.6, staggerChildren: 0.2 }}
+          viewport={{ once: true }}
+        >
+          {testimonials.map((testimonial, index) => (
+            <motion.div
               key={testimonial.id}
               className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 overflow-hidden"
-            >              {/* Customer Photo - Rectangle Format */}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8, scale: 1.02 }}
+              viewport={{ once: true }}
+            >{/* Customer Photo - Rectangle Format */}
               <div className="relative overflow-hidden">
                 <img
                   src={testimonial.image}
@@ -108,16 +120,14 @@ const Testimonials: React.FC = () => {
                 {/* Star Rating */}
                 <div className="flex justify-center mb-3">
                   {renderStars(testimonial.rating)}
-                </div>
-
-                {/* Feedback */}
+                </div>                {/* Feedback */}
                 <p className="text-gray-700 leading-relaxed text-center italic text-sm">
                   "{testimonial.quote}"
                 </p>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Call to Action */}
         <div className="text-center mt-16">

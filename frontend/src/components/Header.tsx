@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (    <header className="bg-white shadow-xl border-b-4 border-blue-600 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+  return (    <motion.header 
+      className="bg-white shadow-xl border-b-4 border-blue-600 sticky top-0 z-50 backdrop-blur-sm bg-white/95"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="flex justify-between items-center py-4">{/* Logo and Company Name */}
           <div className="flex items-center space-x-3">
@@ -107,8 +113,15 @@ const Header: React.FC = () => {
             </svg>
           </button>
         </div>        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200 bg-gradient-to-b from-white to-blue-50">
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div 
+              className="md:hidden py-4 border-t border-gray-200 bg-gradient-to-b from-white to-blue-50"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
             <nav className="flex flex-col space-y-2">
               <a
                 href="#home"
@@ -170,13 +183,13 @@ const Header: React.FC = () => {
                 </div>
                 <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
                   Get Quote
-                </button>
-              </div>
+                </button>              </div>
             </nav>
-          </div>
-        )}
+          </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 
