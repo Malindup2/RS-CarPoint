@@ -3,15 +3,17 @@ import { motion } from 'framer-motion';
 import AdminSidebar from '../components/admin/AdminSidebar';
 import UserManagement from '../components/admin/UserManagement';
 import VehicleManagement from '../components/admin/VehicleManagement';
+import SalesAnalytics from '../components/admin/SalesAnalytics';
 import DashboardOverview from '../components/admin/DashboardOverview';
 
 const AdminDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState('overview');
-
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
         return <DashboardOverview />;
+      case 'analytics':
+        return <SalesAnalytics />;
       case 'users':
         return <UserManagement />;
       case 'vehicles':
