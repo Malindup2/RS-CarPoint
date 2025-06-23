@@ -101,28 +101,42 @@ const Services: React.FC = () => {
         </svg>
       )
     }
-  ];
-
-  const benefits = [
+  ];  const benefits = [
     {
       title: "Expert Consultation",
       description: "Our experienced team provides personalized guidance to help you find the perfect vehicle.",
-      icon: "👨‍💼"
+      icon: () => (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      )
     },
     {
       title: "Quality Assurance",
       description: "Every vehicle undergoes rigorous inspection to ensure reliability and safety.",
-      icon: "✅"
+      icon: () => (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+        </svg>
+      )
     },
     {
       title: "Competitive Pricing",
       description: "We offer fair, transparent pricing with no hidden fees or surprises.",
-      icon: "💰"
+      icon: () => (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+        </svg>
+      )
     },
     {
       title: "Customer Satisfaction",
       description: "Your satisfaction is our priority. We're committed to exceeding your expectations.",
-      icon: "⭐"
+      icon: () => (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        </svg>
+      )
     }
   ];
 
@@ -265,9 +279,8 @@ const Services: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
-              >
-                <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-6 group-hover:bg-blue-500 transition-colors duration-300 group-hover:scale-110 transform">
-                  {benefit.icon}
+              >                <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center text-white text-3xl mx-auto mb-6 group-hover:bg-blue-500 transition-colors duration-300 group-hover:scale-110 transform">
+                  {benefit.icon()}
                 </div>
                 <h3 className="text-xl font-bold mb-4 group-hover:text-blue-400 transition-colors duration-300">
                   {benefit.title}
