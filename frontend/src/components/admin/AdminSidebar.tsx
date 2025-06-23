@@ -4,7 +4,8 @@ import {
   faChartBar, 
   faUsers, 
   faCar,
-  faSignOutAlt
+  faSignOutAlt,
+  faChartLine
 } from '@fortawesome/free-solid-svg-icons';
 
 interface AdminSidebarProps {
@@ -14,6 +15,7 @@ interface AdminSidebarProps {
 
 const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) => {  const menuItems = [
     { id: 'overview', label: 'Dashboard', icon: faChartBar },
+    { id: 'sales', label: 'Sales Analytics', icon: faChartLine },
     { id: 'users', label: 'User Management', icon: faUsers },
     { id: 'vehicles', label: 'Vehicle Management', icon: faCar },
   ];

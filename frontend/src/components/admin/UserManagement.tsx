@@ -11,6 +11,10 @@ import {
   faTrash,
   faFilter
 } from '@fortawesome/free-solid-svg-icons';
+import Swal from 'sweetalert2';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { saveAs } from 'file-saver';
 
 interface User {
   id: number;
@@ -48,12 +52,14 @@ const UserManagement: React.FC = () => {
     setUsers(users.map(user => 
       user.id === userId ? { ...user, role: 'broker' } : user
     ));
+    toast.success('User promoted to broker!');
   };
 
   const handleDemoteToUser = (userId: number) => {
     setUsers(users.map(user => 
       user.id === userId ? { ...user, role: 'user' } : user
     ));
+    toast.success('Broker demoted to user!');
   };
 
   const handleToggleStatus = (userId: number) => {
@@ -62,11 +68,22 @@ const UserManagement: React.FC = () => {
         ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' }
         : user
     ));
+    toast.info('User status updated!');
   };
 
-  const handleDeleteUser = (userId: number) => {
-    if (window.confirm('Are you sure you want to delete this user?')) {
+  const handleDeleteUser = async (userId: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to delete this user?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+    if (result.isConfirmed) {
       setUsers(users.filter(user => user.id !== userId));
+      toast.success('User deleted successfully!');
     }
   };
 
@@ -85,6 +102,15 @@ const UserManagement: React.FC = () => {
       : 'bg-red-100 text-red-800';
   };
 
+  // Add this function to generate and download CSV
+  const downloadUserReport = () => {
+    const headers = ['Name', 'Email', 'Role', 'Status', 'Join Date', 'Last Login'];
+    const rows = filteredUsers.map(user => [user.name, user.email, user.role, user.status, user.joinDate, user.lastLogin]);
+    const csvContent = [headers, ...rows].map(e => e.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'user_report.csv');
+  };
+
   return (    <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -97,6 +123,12 @@ const UserManagement: React.FC = () => {
         >
           <FontAwesomeIcon icon={faUserPlus} />
           <span>Add New User</span>
+        </button>
+        <button
+          onClick={downloadUserReport}
+          className="ml-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center space-x-2"
+        >
+          <span>Download Report</span>
         </button>
       </div>
 
@@ -255,6 +287,7 @@ const UserManagement: React.FC = () => {
           No users found matching your search criteria.
         </div>
       )}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };

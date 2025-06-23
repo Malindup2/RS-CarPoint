@@ -11,6 +11,10 @@ import {
   faTrash,
   faEye
 } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Swal from 'sweetalert2';
+import { saveAs } from 'file-saver';
 
 interface Vehicle {
   id: number;
@@ -25,7 +29,24 @@ interface Vehicle {
   status: 'Available' | 'Sold' | 'Reserved';
   images: string[];
   addedDate: string;
+  engineCapacity?: string;
+  manufactureDate?: string;
+  description?: string;
 }
+
+// Modal component
+const Modal: React.FC<{ open: boolean; onClose: () => void; title: string; children: React.ReactNode }> = ({ open, onClose, title, children }) => {
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
+      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg relative">
+        <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl">&times;</button>
+        <h3 className="text-2xl font-bold mb-6 text-blue-700">{title}</h3>
+        {children}
+      </div>
+    </div>
+  );
+};
 
 const VehicleManagement: React.FC = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([
@@ -93,6 +114,25 @@ const VehicleManagement: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<string>('all');  const [sortBy, setSortBy] = useState<string>('addedDate');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
+  const [isAddModalOpen, setAddModalOpen] = useState(false);
+  const [isEditModalOpen, setEditModalOpen] = useState(false);
+  const [editVehicle, setEditVehicle] = useState<Vehicle | null>(null);
+
+  // Form state for add/edit
+  const initialFormState = {
+    make: '',
+    model: '',
+    year: new Date().getFullYear(),
+    price: '',
+    mileage: '',
+    fuelType: 'Petrol',
+    transmission: 'Automatic',
+    engineCapacity: '',
+    manufactureDate: '',
+    description: '',
+  };
+  const [form, setForm] = useState<any>(initialFormState);
+
   // Filter and sort vehicles
   const filteredAndSortedVehicles = vehicles
     .filter(vehicle => {
@@ -116,9 +156,19 @@ const VehicleManagement: React.FC = () => {
       }
     });
 
-  const handleDeleteVehicle = (vehicleId: number) => {
-    if (window.confirm('Are you sure you want to delete this vehicle?')) {
+  const handleDeleteVehicle = async (vehicleId: number) => {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to delete this vehicle?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+    if (result.isConfirmed) {
       setVehicles(vehicles.filter(vehicle => vehicle.id !== vehicleId));
+      toast.success('Vehicle deleted successfully!');
     }
   };
 
@@ -154,6 +204,109 @@ const VehicleManagement: React.FC = () => {
     return `LKR ${price.toLocaleString()}`;
   };
 
+  const openAddModal = () => {
+    setForm(initialFormState);
+    setAddModalOpen(true);
+  };
+  const openEditModal = (vehicle: Vehicle) => {
+    setForm({
+      make: vehicle.make,
+      model: vehicle.model,
+      year: vehicle.year,
+      price: vehicle.price,
+      mileage: vehicle.mileage,
+      fuelType: vehicle.fuelType,
+      transmission: vehicle.transmission,
+      engineCapacity: vehicle.engineCapacity || '',
+      manufactureDate: vehicle.manufactureDate || '',
+      description: vehicle.description || '',
+    });
+    setEditVehicle(vehicle);
+    setEditModalOpen(true);
+  };
+  const closeModal = () => {
+    setAddModalOpen(false);
+    setEditModalOpen(false);
+    setEditVehicle(null);
+  };
+
+  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleAddVehicle = (e: React.FormEvent) => {
+    e.preventDefault();
+    setVehicles([
+      ...vehicles,
+      {
+        id: vehicles.length + 1,
+        make: form.make,
+        model: form.model,
+        year: Number(form.year),
+        price: Number(form.price),
+        mileage: Number(form.mileage),
+        fuelType: form.fuelType,
+        transmission: form.transmission,
+        engineCapacity: form.engineCapacity,
+        manufactureDate: form.manufactureDate,
+        description: form.description,
+        condition: 'Excellent',
+        status: 'Available',
+        images: [],
+        addedDate: new Date().toISOString().slice(0, 10),
+      },
+    ]);
+    closeModal();
+    toast.success('Vehicle added successfully!');
+  };
+
+  const handleEditVehicle = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editVehicle) return;
+    setVehicles(
+      vehicles.map((v) =>
+        v.id === editVehicle.id
+          ? {
+              ...v,
+              make: form.make,
+              model: form.model,
+              year: Number(form.year),
+              price: Number(form.price),
+              mileage: Number(form.mileage),
+              fuelType: form.fuelType,
+              transmission: form.transmission,
+              engineCapacity: form.engineCapacity,
+              manufactureDate: form.manufactureDate,
+              description: form.description,
+            }
+          : v
+      )
+    );
+    closeModal();
+    toast.success('Vehicle updated successfully!');
+  };
+
+  // Add this function to generate and download CSV
+  const downloadVehicleReport = () => {
+    const headers = ['Brand', 'Model', 'Year', 'Price', 'Mileage', 'Fuel', 'Engine Capacity', 'Manufacture Date', 'Gear Type', 'Status', 'Description'];
+    const rows = filteredAndSortedVehicles.map(vehicle => [
+      vehicle.make,
+      vehicle.model,
+      vehicle.year,
+      vehicle.price,
+      vehicle.mileage,
+      vehicle.fuelType,
+      vehicle.engineCapacity || '',
+      vehicle.manufactureDate || '',
+      vehicle.transmission,
+      vehicle.status,
+      vehicle.description || ''
+    ]);
+    const csvContent = [headers, ...rows].map(e => e.join(',')).join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'vehicle_report.csv');
+  };
+
   return (    <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
@@ -161,11 +314,17 @@ const VehicleManagement: React.FC = () => {
           <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">Vehicle Management</h2>
           <p className="text-gray-600 mt-1">Manage vehicle inventory and listings</p>
         </div>        <button 
-          onClick={() => console.log('Add new vehicle modal would open')}
+          onClick={openAddModal}
           className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center space-x-2"
         >
           <FontAwesomeIcon icon={faPlus} />
           <span>Add New Vehicle</span>
+        </button>
+        <button
+          onClick={downloadVehicleReport}
+          className="ml-4 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center space-x-2"
+        >
+          <span>Download Report</span>
         </button>
       </div>
 
@@ -338,7 +497,7 @@ const VehicleManagement: React.FC = () => {
 
                 {/* Action Buttons */}
                 <div className="grid grid-cols-2 gap-3">                  <button
-                    onClick={() => console.log('Edit vehicle:', vehicle.id)}
+                    onClick={() => openEditModal(vehicle)}
                     className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 text-sm font-medium"
                   >
                     <FontAwesomeIcon icon={faEdit} />
@@ -387,6 +546,119 @@ const VehicleManagement: React.FC = () => {
           <p>No vehicles found matching your search criteria.</p>
         </div>
       )}
+
+      {/* Add Vehicle Modal */}
+      <Modal open={isAddModalOpen} onClose={closeModal} title="Add New Vehicle">
+        <form onSubmit={handleAddVehicle} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Brand</label>
+              <input name="make" value={form.make} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Model</label>
+              <input name="model" value={form.model} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Price</label>
+              <input name="price" type="number" value={form.price} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Fuel</label>
+              <select name="fuelType" value={form.fuelType} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2">
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Mileage</label>
+              <input name="mileage" type="number" value={form.mileage} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Engine Capacity (cc)</label>
+              <input name="engineCapacity" type="number" value={form.engineCapacity} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Manufacture Date</label>
+              <input name="manufactureDate" type="date" value={form.manufactureDate} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Gear Type</label>
+              <select name="transmission" value={form.transmission} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2">
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Description (optional)</label>
+            <textarea name="description" value={form.description} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" rows={3} />
+          </div>
+          <div className="flex justify-end space-x-2 mt-4">
+            <button type="button" onClick={closeModal} className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200">Cancel</button>
+            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Add Vehicle</button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Edit Vehicle Modal */}
+      <Modal open={isEditModalOpen} onClose={closeModal} title="Edit Vehicle">
+        <form onSubmit={handleEditVehicle} className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1">Brand</label>
+              <input name="make" value={form.make} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Model</label>
+              <input name="model" value={form.model} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Price</label>
+              <input name="price" type="number" value={form.price} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Fuel</label>
+              <select name="fuelType" value={form.fuelType} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2">
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Mileage</label>
+              <input name="mileage" type="number" value={form.mileage} onChange={handleFormChange} required className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Engine Capacity (cc)</label>
+              <input name="engineCapacity" type="number" value={form.engineCapacity} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Manufacture Date</label>
+              <input name="manufactureDate" type="date" value={form.manufactureDate} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Gear Type</label>
+              <select name="transmission" value={form.transmission} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2">
+                <option value="Automatic">Automatic</option>
+                <option value="Manual">Manual</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Description (optional)</label>
+            <textarea name="description" value={form.description} onChange={handleFormChange} className="w-full border rounded-lg px-3 py-2" rows={3} />
+          </div>
+          <div className="flex justify-end space-x-2 mt-4">
+            <button type="button" onClick={closeModal} className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200">Cancel</button>
+            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Save Changes</button>
+          </div>
+        </form>
+      </Modal>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };
