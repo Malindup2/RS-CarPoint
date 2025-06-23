@@ -1,15 +1,22 @@
 package com.example.rscarpoint.controller;
 
-import com.example.rscarpoint.model.Deal;
-import com.example.rscarpoint.repository.DealRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.security.Principal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.rscarpoint.model.Deal;
+import com.example.rscarpoint.repository.DealRepository;
+
 @RestController
-@CrossOrigin(origins = "http://localhost:3004", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3003", "http://localhost:3004"}, allowCredentials = "true")
 @RequestMapping("/api/deals")
 public class DealController {
     @Autowired

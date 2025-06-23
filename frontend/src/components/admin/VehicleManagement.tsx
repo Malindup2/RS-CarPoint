@@ -11,8 +11,6 @@ import {
   faTrash,
   faEye
 } from '@fortawesome/free-solid-svg-icons';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
 import * as api from '../../api';
@@ -106,7 +104,7 @@ const VehicleManagement: React.FC = () => {
     if (result.isConfirmed) {
       await api.deleteVehicle(vehicleId.toString());
       api.getVehicles().then(setVehicles);
-      toast.success('Vehicle deleted successfully!');
+      alert('Vehicle deleted successfully!');
     }
   };
 
@@ -194,7 +192,7 @@ const VehicleManagement: React.FC = () => {
     }
     api.getVehicles().then(setVehicles);
     closeModal();
-    toast.success('Vehicle added successfully!');
+    alert('Vehicle added successfully!');
   };
 
   const handleEditVehicle = async (e: React.FormEvent) => {
@@ -219,7 +217,7 @@ const VehicleManagement: React.FC = () => {
     }
     api.getVehicles().then(setVehicles);
     closeModal();
-    toast.success('Vehicle updated successfully!');
+    alert('Vehicle updated successfully!');
   };
 
   // Add this function to generate and download CSV
@@ -598,11 +596,9 @@ const VehicleManagement: React.FC = () => {
           </div>
           <div className="flex justify-end space-x-2 mt-4">
             <button type="button" onClick={closeModal} className="px-4 py-2 rounded-lg border border-gray-300 bg-gray-100 hover:bg-gray-200">Cancel</button>
-            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Save Changes</button>
-          </div>
+            <button type="submit" className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700">Save Changes</button>          </div>
         </form>
       </Modal>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };

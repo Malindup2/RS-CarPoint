@@ -12,8 +12,6 @@ import {
   faFilter
 } from '@fortawesome/free-solid-svg-icons';
 import Swal from 'sweetalert2';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { saveAs } from 'file-saver';
 
 interface User {
@@ -52,14 +50,14 @@ const UserManagement: React.FC = () => {
     setUsers(users.map(user => 
       user.id === userId ? { ...user, role: 'broker' } : user
     ));
-    toast.success('User promoted to broker!');
+    alert('User promoted to broker!');
   };
 
   const handleDemoteToUser = (userId: number) => {
     setUsers(users.map(user => 
       user.id === userId ? { ...user, role: 'user' } : user
     ));
-    toast.success('Broker demoted to user!');
+    alert('Broker demoted to user!');
   };
 
   const handleToggleStatus = (userId: number) => {
@@ -68,7 +66,7 @@ const UserManagement: React.FC = () => {
         ? { ...user, status: user.status === 'active' ? 'inactive' : 'active' }
         : user
     ));
-    toast.info('User status updated!');
+    alert('User status updated!');
   };
 
   const handleDeleteUser = async (userId: number) => {
@@ -83,7 +81,7 @@ const UserManagement: React.FC = () => {
     });
     if (result.isConfirmed) {
       setUsers(users.filter(user => user.id !== userId));
-      toast.success('User deleted successfully!');
+      alert('User deleted successfully!');
     }
   };
 
@@ -283,11 +281,9 @@ const UserManagement: React.FC = () => {
       </div>
 
       {filteredUsers.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          No users found matching your search criteria.
+        <div className="text-center py-8 text-gray-500">          No users found matching your search criteria.
         </div>
       )}
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 };
