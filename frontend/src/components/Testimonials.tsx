@@ -127,23 +127,63 @@ const Testimonials: React.FC = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 text-white">
-            <h3 className="text-2xl font-bold mb-4">Join Our Happy Customers</h3>
-            <p className="text-blue-100 mb-6 text-lg">
-              Experience the RS Car Point difference and find your perfect vehicle today!
+        </motion.div>        {/* Location Images Section */}
+        <div className="mt-20">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">
+              Kirinda Puhulwella <span className="text-blue-600">Location</span>
+            </h3>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Visit our showroom located in the heart of Kirinda Puhulwella, Matara. 
+              Experience our complete range of vehicles in person.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
-                Browse Vehicles
-              </button>
-              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition duration-300">
-                Contact Us
-              </button>
-            </div>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-4 rounded-full"></div>
+          </div>
+          
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, staggerChildren: 0.15 }}
+            viewport={{ once: true }}
+          >
+            {[
+              { image: require('../assets/location/s1.jpg'), title: "Showroom Exterior" },
+              { image: require('../assets/location/s2.jpg'), title: "Vehicle Display Area" },
+              { image: require('../assets/location/s3.jpg'), title: "Customer Service" },
+              { image: require('../assets/location/s4.jpg'), title: "Location View" }
+            ].map((location, index) => (
+              <motion.div
+                key={index}
+                className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                viewport={{ once: true }}
+              >
+                <div className="relative overflow-hidden rounded-xl">
+                  <img
+                    src={location.image}
+                    alt={location.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                    <h4 className="text-lg font-semibold">{location.title}</h4>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+          
+          <div className="text-center mt-12">
+            <p className="text-gray-600 mb-6">
+              Located at Kirinda Puhulwella, Matara, Sri Lanka
+            </p>
+            <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300 shadow-lg hover:shadow-xl">
+              Get Directions
+            </button>
           </div>
         </div>
       </div>

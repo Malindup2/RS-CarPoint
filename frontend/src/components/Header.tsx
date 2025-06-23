@@ -33,13 +33,6 @@ const Header: React.FC = () => {
               <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
-              href="#inventory"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
-            >
-              Inventory
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
-            <a
               href="#services"
               className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
@@ -47,27 +40,13 @@ const Header: React.FC = () => {
               <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
-              href="#financing"
+              href="#blog"
               className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
-              Financing
+              Blog
               <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
-            <a
-              href="#about"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
-            >
-              About Us
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
-            <a
-              href="#contact"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
-            >
-              Contact
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
-          </nav>          {/* Contact Info & CTA */}
+          </nav>{/* Contact Info & CTA */}
           <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-center space-x-3 text-right">
               <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
@@ -121,19 +100,12 @@ const Header: React.FC = () => {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-            >
-            <nav className="flex flex-col space-y-2">
+            >            <nav className="flex flex-col space-y-2">
               <a
                 href="#home"
                 className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Home
-              </a>
-              <a
-                href="#inventory"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
-              >
-                Inventory
               </a>
               <a
                 href="#services"
@@ -142,23 +114,11 @@ const Header: React.FC = () => {
                 Services
               </a>
               <a
-                href="#financing"
+                href="#blog"
                 className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
-                Financing
-              </a>
-              <a
-                href="#about"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
-              >
-                About Us
-              </a>
-              <a
-                href="#contact"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
-              >
-                Contact
-              </a>              <div className="pt-4 mt-4 border-t border-gray-300">
+                Blog
+              </a><div className="pt-4 mt-4 border-t border-gray-300">
                 <div className="flex items-center space-x-2 mb-3 px-4">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                     <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">

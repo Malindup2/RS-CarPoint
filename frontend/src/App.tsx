@@ -8,6 +8,7 @@ import Testimonials from './components/Testimonials';
 import LeasingPartners from './components/LeasingPartners';
 import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
+import FloatingWhatsApp from './components/FloatingWhatsApp';
 import './App.css';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <CallToAction />
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }

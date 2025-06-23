@@ -98,9 +98,7 @@ const VehicleBrands: React.FC = () => {  const brands = [
               </div>
             </motion.div>
           ))}
-        </motion.div>
-
-        {/* Statistics Section */}
+        </motion.div>        {/* Statistics Section */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 lg:p-12 text-white">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
@@ -114,25 +112,6 @@ const VehicleBrands: React.FC = () => {  const brands = [
               <div className="text-4xl lg:text-5xl font-bold mb-2">15+</div>
               <div className="text-blue-100 font-medium">Years Experience</div>
             </div>
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-12">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Looking for a Specific Brand?
-          </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Can't find the brand you're looking for? Contact us and we'll help you find the perfect vehicle 
-            from any brand to match your needs and budget.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition duration-300 transform hover:scale-105">
-              Browse All Vehicles
-            </button>
-            <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-3 rounded-lg font-semibold transition duration-300">
-              Contact Us
-            </button>
           </div>
         </div>
       </div>
