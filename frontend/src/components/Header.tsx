@@ -74,10 +74,12 @@ const Header: React.FC = () => {
                 <p className="text-xs text-gray-500 font-medium">Call Randika</p>
                 <p className="font-bold text-gray-900 text-sm">071 472 7813</p>
               </div>
-            </div>
-            <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-              Get Quote
-            </button>
+            </div>            <Link 
+              to="/broker-signup"
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              Become a Partner
+            </Link>
           </div>          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 border border-gray-200 hover:border-blue-200"
