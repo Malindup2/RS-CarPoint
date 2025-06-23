@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -15,6 +15,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Swal from 'sweetalert2';
 import { saveAs } from 'file-saver';
+import * as api from '../../api';
 
 interface Vehicle {
   id: number;
@@ -32,6 +33,7 @@ interface Vehicle {
   engineCapacity?: string;
   manufactureDate?: string;
   description?: string;
+  imageBase64?: string;
 }
 
 // Modal component
@@ -49,69 +51,12 @@ const Modal: React.FC<{ open: boolean; onClose: () => void; title: string; child
 };
 
 const VehicleManagement: React.FC = () => {
-  const [vehicles, setVehicles] = useState<Vehicle[]>([
-    {
-      id: 1,
-      make: 'Toyota',
-      model: 'Camry',
-      year: 2020,
-      price: 3500000,
-      mileage: 45000,
-      fuelType: 'Petrol',
-      transmission: 'Automatic',
-      condition: 'Excellent',
-      status: 'Available',
-      images: [],
-      addedDate: '2024-06-01'
-    },
-    {
-      id: 2,
-      make: 'Honda',
-      model: 'Civic',
-      year: 2019,
-      price: 2800000,
-      mileage: 62000,
-      fuelType: 'Petrol',
-      transmission: 'Manual',
-      condition: 'Good',
-      status: 'Available',
-      images: [],
-      addedDate: '2024-06-05'
-    },
-    {
-      id: 3,
-      make: 'Nissan',
-      model: 'Leaf',
-      year: 2021,
-      price: 4200000,
-      mileage: 25000,
-      fuelType: 'Electric',
-      transmission: 'Automatic',
-      condition: 'Excellent',
-      status: 'Sold',
-      images: [],
-      addedDate: '2024-06-10'
-    },
-    {
-      id: 4,
-      make: 'Toyota',
-      model: 'Prius',
-      year: 2018,
-      price: 2200000,
-      mileage: 78000,
-      fuelType: 'Hybrid',
-      transmission: 'Automatic',
-      condition: 'Good',
-      status: 'Reserved',
-      images: [],
-      addedDate: '2024-06-15'
-    }
-  ]);
-
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMake, setFilterMake] = useState<string>('all');
   const [filterFuelType, setFilterFuelType] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');  const [sortBy, setSortBy] = useState<string>('addedDate');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [sortBy, setSortBy] = useState<string>('addedDate');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   const [isAddModalOpen, setAddModalOpen] = useState(false);
@@ -130,8 +75,13 @@ const VehicleManagement: React.FC = () => {
     engineCapacity: '',
     manufactureDate: '',
     description: '',
+    imageFile: null,
   };
   const [form, setForm] = useState<any>(initialFormState);
+
+  useEffect(() => {
+    api.getVehicles().then(setVehicles);
+  }, []);
 
   // Filter and sort vehicles
   const filteredAndSortedVehicles = vehicles
@@ -167,7 +117,8 @@ const VehicleManagement: React.FC = () => {
       confirmButtonText: 'Yes, delete it!'
     });
     if (result.isConfirmed) {
-      setVehicles(vehicles.filter(vehicle => vehicle.id !== vehicleId));
+      await api.deleteVehicle(vehicleId.toString());
+      api.getVehicles().then(setVehicles);
       toast.success('Vehicle deleted successfully!');
     }
   };
@@ -220,6 +171,7 @@ const VehicleManagement: React.FC = () => {
       engineCapacity: vehicle.engineCapacity || '',
       manufactureDate: vehicle.manufactureDate || '',
       description: vehicle.description || '',
+      imageFile: null,
     });
     setEditVehicle(vehicle);
     setEditModalOpen(true);
@@ -234,54 +186,51 @@ const VehicleManagement: React.FC = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleAddVehicle = (e: React.FormEvent) => {
+  const handleAddVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
-    setVehicles([
-      ...vehicles,
-      {
-        id: vehicles.length + 1,
-        make: form.make,
-        model: form.model,
-        year: Number(form.year),
-        price: Number(form.price),
-        mileage: Number(form.mileage),
-        fuelType: form.fuelType,
-        transmission: form.transmission,
-        engineCapacity: form.engineCapacity,
-        manufactureDate: form.manufactureDate,
-        description: form.description,
-        condition: 'Excellent',
-        status: 'Available',
-        images: [],
-        addedDate: new Date().toISOString().slice(0, 10),
-      },
-    ]);
+    const newVehicle = await api.createVehicle({
+      make: form.make,
+      model: form.model,
+      year: Number(form.year),
+      price: Number(form.price),
+      mileage: Number(form.mileage),
+      fuelType: form.fuelType,
+      transmission: form.transmission,
+      engineCapacity: form.engineCapacity,
+      manufactureDate: form.manufactureDate,
+      description: form.description,
+      status: 'Available',
+    });
+    // If image file selected, upload it
+    if (form.imageFile) {
+      await api.uploadVehicleImage(newVehicle.id, form.imageFile);
+    }
+    api.getVehicles().then(setVehicles);
     closeModal();
     toast.success('Vehicle added successfully!');
   };
 
-  const handleEditVehicle = (e: React.FormEvent) => {
+  const handleEditVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editVehicle) return;
-    setVehicles(
-      vehicles.map((v) =>
-        v.id === editVehicle.id
-          ? {
-              ...v,
-              make: form.make,
-              model: form.model,
-              year: Number(form.year),
-              price: Number(form.price),
-              mileage: Number(form.mileage),
-              fuelType: form.fuelType,
-              transmission: form.transmission,
-              engineCapacity: form.engineCapacity,
-              manufactureDate: form.manufactureDate,
-              description: form.description,
-            }
-          : v
-      )
-    );
+    await api.updateVehicle(editVehicle.id, {
+      make: form.make,
+      model: form.model,
+      year: Number(form.year),
+      price: Number(form.price),
+      mileage: Number(form.mileage),
+      fuelType: form.fuelType,
+      transmission: form.transmission,
+      engineCapacity: form.engineCapacity,
+      manufactureDate: form.manufactureDate,
+      description: form.description,
+      status: editVehicle.status,
+    });
+    // If image file selected, upload it
+    if (form.imageFile) {
+      await api.uploadVehicleImage(editVehicle.id, form.imageFile);
+    }
+    api.getVehicles().then(setVehicles);
     closeModal();
     toast.success('Vehicle updated successfully!');
   };
@@ -448,7 +397,7 @@ const VehicleManagement: React.FC = () => {
           >            {/* Vehicle Image Placeholder */}
             <div className="h-48 bg-gradient-to-r from-blue-100 to-slate-100 flex items-center justify-center">
               <div className="p-4 bg-white rounded-full shadow-lg">
-                <FontAwesomeIcon icon={faCar} className="text-4xl text-blue-600" />
+                <img src={`data:image/jpeg;base64,${vehicle.imageBase64}`} alt="Vehicle" className="w-16 h-16 object-cover" />
               </div>
             </div>
 
@@ -591,6 +540,10 @@ const VehicleManagement: React.FC = () => {
                 <option value="Manual">Manual</option>
               </select>
             </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Image</label>
+              <input type="file" accept="image/*" onChange={e => setForm({ ...form, imageFile: e.target.files?.[0] })} />
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Description (optional)</label>
@@ -646,6 +599,10 @@ const VehicleManagement: React.FC = () => {
                 <option value="Automatic">Automatic</option>
                 <option value="Manual">Manual</option>
               </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Image</label>
+              <input type="file" accept="image/*" onChange={e => setForm({ ...form, imageFile: e.target.files?.[0] })} />
             </div>
           </div>
           <div>
