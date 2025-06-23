@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import Features from './components/Features';
 import VehicleInventory from './components/VehicleInventory';
 import VehicleBrands from './components/VehicleBrands';
 import Testimonials from './components/Testimonials';
@@ -16,7 +15,6 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <Features />
         <VehicleInventory />
         <VehicleBrands />
         <Testimonials />
