@@ -20,4 +20,5 @@ public class Vehicle {
     private String manufactureDate;
     private String description;
     private String status; // Available, Sold, Reserved
+    private String imageBase64; // Base64-encoded image string
 } 

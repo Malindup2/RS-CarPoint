@@ -5,6 +5,9 @@ import com.example.rscarpoint.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
+import java.util.Base64;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,5 +62,20 @@ public class VehicleController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/{id}/upload-image")
+    public ResponseEntity<Vehicle> uploadImage(@PathVariable String id, @RequestParam("file") MultipartFile file) {
+        return vehicleRepository.findById(id)
+                .map(vehicle -> {
+                    try {
+                        String base64 = Base64.getEncoder().encodeToString(file.getBytes());
+                        vehicle.setImageBase64(base64);
+                        return ResponseEntity.ok(vehicleRepository.save(vehicle));
+                    } catch (IOException e) {
+                        return ResponseEntity.status(500).body(vehicle);
+                    }
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 } 
