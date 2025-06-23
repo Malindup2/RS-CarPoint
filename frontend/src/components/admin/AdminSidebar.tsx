@@ -1,28 +1,33 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faChartBar, 
+  faUsers, 
+  faCar,
+  faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
 
 interface AdminSidebarProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
 }
 
-const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) => {
-  const menuItems = [
-    { id: 'overview', label: 'Dashboard', icon: '📊' },
-    { id: 'users', label: 'User Management', icon: '👥' },
-    { id: 'vehicles', label: 'Vehicle Management', icon: '🚗' },
+const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) => {  const menuItems = [
+    { id: 'overview', label: 'Dashboard', icon: faChartBar },
+    { id: 'users', label: 'User Management', icon: faUsers },
+    { id: 'vehicles', label: 'Vehicle Management', icon: faCar },
   ];
 
-  return (
-    <div className="bg-white w-64 min-h-screen shadow-lg">
+  return (    <div className="bg-gradient-to-b from-slate-900 to-slate-800 w-64 min-h-screen shadow-2xl">
       {/* Logo Section */}
-      <div className="p-6 border-b border-gray-200">
+      <div className="p-6 border-b border-slate-700">
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
             <span className="text-white font-bold text-xl">RS</span>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">RS Car Point</h2>
-            <p className="text-sm text-gray-500">Admin Panel</p>
+            <h2 className="text-xl font-bold text-white">RS Car Point</h2>
+            <p className="text-sm text-slate-300">Admin Panel</p>
           </div>
         </div>
       </div>
@@ -34,13 +39,12 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) 
             <li key={item.id}>
               <button
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 ${
                   activeTab === item.id
-                    ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform scale-105'
+                    : 'text-slate-300 hover:bg-slate-700 hover:text-white hover:transform hover:scale-105'
                 }`}
-              >
-                <span className="text-xl">{item.icon}</span>
+              >                <FontAwesomeIcon icon={item.icon} className="text-xl" />
                 <span className="font-medium">{item.label}</span>
               </button>
             </li>
@@ -48,15 +52,22 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) 
         </ul>
       </nav>
 
+      {/* Logout Button */}
+      <div className="px-4 mt-8">        <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-red-600 hover:text-white transition-all duration-200">
+          <FontAwesomeIcon icon={faSignOutAlt} className="text-xl" />
+          <span className="font-medium">Logout</span>
+        </button>
+      </div>
+
       {/* Admin Info */}
-      <div className="absolute bottom-0 w-64 p-4 border-t border-gray-200 bg-gray-50">
+      <div className="absolute bottom-0 w-64 p-4 border-t border-slate-700 bg-slate-800">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
-            <span className="text-gray-600 font-bold">A</span>
+          <div className="w-10 h-10 bg-gradient-to-br from-slate-600 to-slate-700 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold">A</span>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-900">Administrator</p>
-            <p className="text-xs text-gray-500">System Admin</p>
+            <p className="text-sm font-medium text-white">Administrator</p>
+            <p className="text-xs text-slate-400">System Admin</p>
           </div>
         </div>
       </div>

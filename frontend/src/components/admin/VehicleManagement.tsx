@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faPlus, 
+  faSearch, 
+  faFilter,
+  faSort,
+  faCar,
+  faEdit, 
+  faTrash,
+  faEye
+} from '@fortawesome/free-solid-svg-icons';
 
 interface Vehicle {
   id: number;
@@ -79,11 +90,8 @@ const VehicleManagement: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterMake, setFilterMake] = useState<string>('all');
   const [filterFuelType, setFilterFuelType] = useState<string>('all');
-  const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [sortBy, setSortBy] = useState<string>('addedDate');
+  const [filterStatus, setFilterStatus] = useState<string>('all');  const [sortBy, setSortBy] = useState<string>('addedDate');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-  const [showModal, setShowModal] = useState(false);
-  const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null);
 
   // Filter and sort vehicles
   const filteredAndSortedVehicles = vehicles
@@ -146,106 +154,130 @@ const VehicleManagement: React.FC = () => {
     return `LKR ${price.toLocaleString()}`;
   };
 
-  return (
-    <div className="space-y-6">
+  return (    <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Vehicle Management</h2>
-        <button 
-          onClick={() => setShowModal(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+        <div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">Vehicle Management</h2>
+          <p className="text-gray-600 mt-1">Manage vehicle inventory and listings</p>
+        </div>        <button 
+          onClick={() => console.log('Add new vehicle modal would open')}
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center space-x-2"
         >
-          Add New Vehicle
+          <FontAwesomeIcon icon={faPlus} />
+          <span>Add New Vehicle</span>
         </button>
       </div>
 
-      {/* Search and Filters */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          {/* Search */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Search Vehicles</label>
-            <input
-              type="text"
-              placeholder="Search by make or model..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
-
-          {/* Make Filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Make</label>
-            <select
-              value={filterMake}
-              onChange={(e) => setFilterMake(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All Makes</option>
-              {getUniqueMakes().map(make => (
-                <option key={make} value={make}>{make}</option>
-              ))}
-            </select>
-          </div>
-
-          {/* Fuel Type Filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Fuel Type</label>
-            <select
-              value={filterFuelType}
-              onChange={(e) => setFilterFuelType(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All Fuel Types</option>
-              <option value="Petrol">Petrol</option>
-              <option value="Diesel">Diesel</option>
-              <option value="Hybrid">Hybrid</option>
-              <option value="Electric">Electric</option>
-            </select>
-          </div>
-
-          {/* Status Filter */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All Status</option>
-              <option value="Available">Available</option>
-              <option value="Sold">Sold</option>
-              <option value="Reserved">Reserved</option>
-            </select>
-          </div>
-
-          {/* Sort */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
-            <select
-              value={`${sortBy}-${sortOrder}`}
-              onChange={(e) => {
-                const [field, order] = e.target.value.split('-');
-                setSortBy(field);
-                setSortOrder(order as 'asc' | 'desc');
-              }}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="addedDate-desc">Newest First</option>
-              <option value="addedDate-asc">Oldest First</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="year-desc">Year: Newest</option>
-              <option value="year-asc">Year: Oldest</option>
-              <option value="mileage-asc">Mileage: Low to High</option>
-              <option value="mileage-desc">Mileage: High to Low</option>
-            </select>
-          </div>
+      {/* Summary Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+          <div className="text-2xl font-bold text-gray-900">{vehicles.length}</div>
+          <div className="text-sm text-gray-600">Total Vehicles</div>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+          <div className="text-2xl font-bold text-green-600">{vehicles.filter(v => v.status === 'Available').length}</div>
+          <div className="text-sm text-gray-600">Available</div>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+          <div className="text-2xl font-bold text-blue-600">{vehicles.filter(v => v.status === 'Reserved').length}</div>
+          <div className="text-sm text-gray-600">Reserved</div>
+        </div>
+        <div className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100">
+          <div className="text-2xl font-bold text-red-600">{vehicles.filter(v => v.status === 'Sold').length}</div>
+          <div className="text-sm text-gray-600">Sold</div>
         </div>
       </div>
 
-      {/* Vehicles Grid */}
+      {/* Search and Filters */}
+      <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          {/* Search */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Search Vehicles</label>            <div className="relative">
+              <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by make or model..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              />
+            </div>
+          </div>
+
+          {/* Make Filter */}
+          <div>            <label className="block text-sm font-medium text-gray-700 mb-3">Filter by Make</label>            <div className="relative">
+              <FontAwesomeIcon icon={faFilter} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={filterMake}
+                onChange={(e) => setFilterMake(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="all">All Makes</option>
+                {getUniqueMakes().map(make => (
+                  <option key={make} value={make}>{make}</option>
+                ))}
+              </select>
+            </div>
+          </div>          {/* Fuel Type Filter */}
+          <div>            <label className="block text-sm font-medium text-gray-700 mb-3">Filter by Fuel Type</label>            <div className="relative">
+              <FontAwesomeIcon icon={faFilter} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={filterFuelType}
+                onChange={(e) => setFilterFuelType(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="all">All Fuel Types</option>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Hybrid">Hybrid</option>
+                <option value="Electric">Electric</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Status Filter */}
+          <div>            <label className="block text-sm font-medium text-gray-700 mb-3">Filter by Status</label>            <div className="relative">
+              <FontAwesomeIcon icon={faFilter} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="all">All Status</option>
+                <option value="Available">Available</option>
+                <option value="Sold">Sold</option>
+                <option value="Reserved">Reserved</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Sort */}
+          <div>            <label className="block text-sm font-medium text-gray-700 mb-3">Sort By</label>            <div className="relative">
+              <FontAwesomeIcon icon={faSort} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={`${sortBy}-${sortOrder}`}
+                onChange={(e) => {
+                  const [field, order] = e.target.value.split('-');
+                  setSortBy(field);
+                  setSortOrder(order as 'asc' | 'desc');
+                }}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="addedDate-desc">Newest First</option>
+                <option value="addedDate-asc">Oldest First</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="year-desc">Year: Newest</option>
+                <option value="year-asc">Year: Oldest</option>
+                <option value="mileage-asc">Mileage: Low to High</option>
+                <option value="mileage-desc">Mileage: High to Low</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>      {/* Vehicles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredAndSortedVehicles.map((vehicle) => (
           <motion.div
@@ -253,25 +285,26 @@ const VehicleManagement: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden"
-          >
-            {/* Vehicle Image Placeholder */}
-            <div className="h-48 bg-gradient-to-r from-gray-200 to-gray-300 flex items-center justify-center">
-              <span className="text-4xl">🚗</span>
+            className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300"
+          >            {/* Vehicle Image Placeholder */}
+            <div className="h-48 bg-gradient-to-r from-blue-100 to-slate-100 flex items-center justify-center">
+              <div className="p-4 bg-white rounded-full shadow-lg">
+                <FontAwesomeIcon icon={faCar} className="text-4xl text-blue-600" />
+              </div>
             </div>
 
             {/* Vehicle Details */}
-            <div className="p-4">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-lg font-bold text-gray-900">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <h3 className="text-xl font-bold text-gray-900">
                   {vehicle.make} {vehicle.model}
                 </h3>
-                <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(vehicle.status)}`}>
+                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(vehicle.status)}`}>
                   {vehicle.status}
                 </span>
               </div>
 
-              <div className="space-y-2 text-sm text-gray-600">
+              <div className="space-y-3 text-sm text-gray-600">
                 <div className="flex justify-between">
                   <span>Year:</span>
                   <span className="font-medium">{vehicle.year}</span>
@@ -296,36 +329,37 @@ const VehicleManagement: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-200">
-                <div className="flex justify-between items-center mb-3">
+              <div className="mt-6 pt-4 border-t border-gray-200">
+                <div className="flex justify-between items-center mb-4">
                   <span className="text-2xl font-bold text-blue-600">
                     {formatPrice(vehicle.price)}
                   </span>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setEditingVehicle(vehicle)}
-                    className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg transition duration-200 text-sm font-medium"
+                <div className="grid grid-cols-2 gap-3">                  <button
+                    onClick={() => console.log('Edit vehicle:', vehicle.id)}
+                    className="flex items-center justify-center space-x-2 px-4 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition-all duration-200 text-sm font-medium"
                   >
-                    Edit
+                    <FontAwesomeIcon icon={faEdit} />
+                    <span>Edit</span>
                   </button>
                   <button
                     onClick={() => handleDeleteVehicle(vehicle.id)}
-                    className="px-3 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition duration-200 text-sm font-medium"
+                    className="flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-xl transition-all duration-200 text-sm font-medium"
                   >
-                    Delete
+                    <FontAwesomeIcon icon={faTrash} />
+                    <span>Delete</span>
                   </button>
                 </div>
 
                 {/* Status Change Buttons */}
                 {vehicle.status !== 'Sold' && (
-                  <div className="mt-2 grid grid-cols-2 gap-2">
+                  <div className="mt-3 grid grid-cols-2 gap-3">
                     <button
                       onClick={() => handleStatusChange(vehicle.id, 'Reserved')}
                       disabled={vehicle.status === 'Reserved'}
-                      className={`px-3 py-1 rounded-lg text-sm transition duration-200 ${
+                      className={`px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
                         vehicle.status === 'Reserved'
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                           : 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100'
@@ -335,7 +369,7 @@ const VehicleManagement: React.FC = () => {
                     </button>
                     <button
                       onClick={() => handleStatusChange(vehicle.id, 'Sold')}
-                      className="px-3 py-1 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg text-sm transition duration-200"
+                      className="px-3 py-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-xl text-sm transition-all duration-200"
                     >
                       Mark Sold
                     </button>
@@ -345,36 +379,14 @@ const VehicleManagement: React.FC = () => {
             </div>
           </motion.div>
         ))}
-      </div>
-
-      {filteredAndSortedVehicles.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          No vehicles found matching your search criteria.
+      </div>      {filteredAndSortedVehicles.length === 0 && (        <div className="text-center py-12 text-gray-500">
+          <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+            <FontAwesomeIcon icon={faEye} className="text-4xl text-gray-400" />
+          </div>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">No vehicles found</h3>
+          <p>No vehicles found matching your search criteria.</p>
         </div>
       )}
-
-      {/* Summary */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Summary</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="text-center">
-            <div className="text-2xl font-bold text-blue-600">{vehicles.filter(v => v.status === 'Available').length}</div>
-            <div className="text-sm text-gray-600">Available</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-yellow-600">{vehicles.filter(v => v.status === 'Reserved').length}</div>
-            <div className="text-sm text-gray-600">Reserved</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-green-600">{vehicles.filter(v => v.status === 'Sold').length}</div>
-            <div className="text-sm text-gray-600">Sold</div>
-          </div>
-          <div className="text-center">
-            <div className="text-2xl font-bold text-gray-900">{vehicles.length}</div>
-            <div className="text-sm text-gray-600">Total Vehicles</div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

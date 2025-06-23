@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faUserPlus, 
+  faSearch, 
+  faArrowUp, 
+  faArrowDown, 
+  faPause, 
+  faPlay, 
+  faTrash,
+  faFilter
+} from '@fortawesome/free-solid-svg-icons';
 
 interface User {
   id: number;
@@ -19,12 +30,9 @@ const UserManagement: React.FC = () => {
     { id: 4, name: 'Sarah Johnson', email: 'sarah@example.com', role: 'broker', status: 'active', joinDate: '2024-01-28', lastLogin: '2024-06-23' },
     { id: 5, name: 'David Brown', email: 'david@example.com', role: 'user', status: 'active', joinDate: '2024-04-12', lastLogin: '2024-06-21' },
   ]);
-
   const [searchTerm, setSearchTerm] = useState('');
   const [filterRole, setFilterRole] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
-  const [showModal, setShowModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   // Filter users based on search and filters
   const filteredUsers = users.filter(user => {
@@ -77,83 +85,87 @@ const UserManagement: React.FC = () => {
       : 'bg-red-100 text-red-800';
   };
 
-  return (
-    <div className="space-y-6">
+  return (    <div className="space-y-8">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">User Management</h2>
-        <button 
-          onClick={() => setShowModal(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition duration-200"
+        <div>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-slate-800 to-blue-600 bg-clip-text text-transparent">User Management</h2>
+          <p className="text-gray-600 mt-1">Manage user accounts, roles, and permissions</p>
+        </div>        <button 
+          onClick={() => console.log('Add new user modal would open')}
+          className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center space-x-2"
         >
-          Add New User
+          <FontAwesomeIcon icon={faUserPlus} />
+          <span>Add New User</span>
         </button>
       </div>
 
       {/* Search and Filters */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Search */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Search Users</label>
-            <input
-              type="text"
-              placeholder="Search by name or email..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+            <label className="block text-sm font-medium text-gray-700 mb-3">Search Users</label>            <div className="relative">
+              <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search by name or email..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+              />
+            </div>
           </div>
 
           {/* Role Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Role</label>
-            <select
-              value={filterRole}
-              onChange={(e) => setFilterRole(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All Roles</option>
-              <option value="user">User</option>
-              <option value="broker">Broker</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Filter by Role</label>            <div className="relative">
+              <FontAwesomeIcon icon={faFilter} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={filterRole}
+                onChange={(e) => setFilterRole(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="all">All Roles</option>
+                <option value="user">User</option>
+                <option value="broker">Broker</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div></div>
 
           {/* Status Filter */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Status</label>
-            <select
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value="all">All Status</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            <label className="block text-sm font-medium text-gray-700 mb-3">Filter by Status</label>            <div className="relative">
+              <FontAwesomeIcon icon={faFilter} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <select
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition-all duration-200"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Users Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">
+      </div>      {/* Users Table */}
+      <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+        <div className="px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-slate-50 to-blue-50">
+          <h3 className="text-xl font-semibold text-gray-900">
             Users ({filteredUsers.length})
           </h3>
         </div>
-        
-        <div className="overflow-x-auto">
+          <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-gradient-to-r from-slate-100 to-blue-100">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Join Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Login</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">User</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Role</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Status</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Join Date</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Last Login</th>
+                <th className="px-8 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -162,64 +174,72 @@ const UserManagement: React.FC = () => {
                   key={user.id}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="hover:bg-gray-50"
+                  transition={{ duration: 0.3 }}                  className="hover:bg-gradient-to-r hover:from-blue-50 hover:to-slate-50 transition-all duration-200"
                 >
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-8 py-6 whitespace-nowrap">
                     <div>
                       <div className="text-sm font-medium text-gray-900">{user.name}</div>
                       <div className="text-sm text-gray-500">{user.email}</div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getRoleColor(user.role)}`}>
+                  <td className="px-8 py-6 whitespace-nowrap">
+                    <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getRoleColor(user.role)}`}>
                       {user.role}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(user.status)}`}>
+                  <td className="px-8 py-6 whitespace-nowrap">
+                    <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(user.status)}`}>
                       {user.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm text-gray-500">
                     {user.joinDate}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm text-gray-500">
                     {user.lastLogin}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm font-medium">
                     <div className="flex space-x-2">
-                      {user.role === 'user' && (
-                        <button
+                      {user.role === 'user' && (                        <button
                           onClick={() => handlePromoteToBroker(user.id)}
-                          className="text-blue-600 hover:text-blue-900 text-xs bg-blue-50 hover:bg-blue-100 px-2 py-1 rounded"
+                          className="flex items-center space-x-1 text-blue-600 hover:text-blue-900 text-xs bg-blue-50 hover:bg-blue-100 px-3 py-2 rounded-lg transition-all duration-200"
                         >
-                          Promote
+                          <FontAwesomeIcon icon={faArrowUp} />
+                          <span>Promote</span>
                         </button>
                       )}
-                      {user.role === 'broker' && (
-                        <button
+                      {user.role === 'broker' && (                        <button
                           onClick={() => handleDemoteToUser(user.id)}
-                          className="text-orange-600 hover:text-orange-900 text-xs bg-orange-50 hover:bg-orange-100 px-2 py-1 rounded"
+                          className="flex items-center space-x-1 text-orange-600 hover:text-orange-900 text-xs bg-orange-50 hover:bg-orange-100 px-3 py-2 rounded-lg transition-all duration-200"
                         >
-                          Demote
+                          <FontAwesomeIcon icon={faArrowDown} />
+                          <span>Demote</span>
                         </button>
                       )}
                       <button
                         onClick={() => handleToggleStatus(user.id)}
-                        className={`text-xs px-2 py-1 rounded ${
+                        className={`flex items-center space-x-1 text-xs px-3 py-2 rounded-lg transition-all duration-200 ${
                           user.status === 'active'
                             ? 'text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100'
                             : 'text-green-600 hover:text-green-900 bg-green-50 hover:bg-green-100'
                         }`}
-                      >
-                        {user.status === 'active' ? 'Deactivate' : 'Activate'}
-                      </button>
-                      <button
+                      >                        {user.status === 'active' ? (
+                          <>
+                            <FontAwesomeIcon icon={faPause} />
+                            <span>Deactivate</span>
+                          </>
+                        ) : (
+                          <>
+                            <FontAwesomeIcon icon={faPlay} />
+                            <span>Activate</span>
+                          </>
+                        )}
+                      </button>                      <button
                         onClick={() => handleDeleteUser(user.id)}
-                        className="text-red-600 hover:text-red-900 text-xs bg-red-50 hover:bg-red-100 px-2 py-1 rounded"
+                        className="flex items-center space-x-1 text-red-600 hover:text-red-900 text-xs bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition-all duration-200"
                       >
-                        Delete
+                        <FontAwesomeIcon icon={faTrash} />
+                        <span>Delete</span>
                       </button>
                     </div>
                   </td>

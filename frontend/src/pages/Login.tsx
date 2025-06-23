@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -129,14 +131,11 @@ const Login: React.FC = () => {
         </motion.div>
 
         {/* Back to Home */}
-        <div className="text-center mt-6">
-          <Link
+        <div className="text-center mt-6">          <Link
             to="/"
             className="inline-flex items-center text-white hover:text-blue-200 transition-colors duration-200"
           >
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
+            <FontAwesomeIcon icon={faArrowLeft} className="w-5 h-5 mr-2" />
             Back to Home
           </Link>
         </div>
