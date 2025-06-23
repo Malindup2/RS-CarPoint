@@ -9,6 +9,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3004", allowCredentials = "true")
 @RequestMapping("/api/deals")
 public class DealController {
     @Autowired

@@ -203,7 +203,7 @@ const VehicleManagement: React.FC = () => {
     });
     // If image file selected, upload it
     if (form.imageFile) {
-      await api.uploadVehicleImage(newVehicle.id, form.imageFile);
+      await api.uploadVehicleImage(newVehicle.id.toString(), form.imageFile);
     }
     api.getVehicles().then(setVehicles);
     closeModal();
@@ -213,7 +213,7 @@ const VehicleManagement: React.FC = () => {
   const handleEditVehicle = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editVehicle) return;
-    await api.updateVehicle(editVehicle.id, {
+    await api.updateVehicle(editVehicle.id.toString(), {
       make: form.make,
       model: form.model,
       year: Number(form.year),
@@ -228,7 +228,7 @@ const VehicleManagement: React.FC = () => {
     });
     // If image file selected, upload it
     if (form.imageFile) {
-      await api.uploadVehicleImage(editVehicle.id, form.imageFile);
+      await api.uploadVehicleImage(editVehicle.id.toString(), form.imageFile);
     }
     api.getVehicles().then(setVehicles);
     closeModal();
