@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (    <header className="bg-white shadow-lg border-b-2 border-blue-600">
+  return (    <header className="bg-white shadow-xl border-b-4 border-blue-600 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
       <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
-        <div className="flex justify-between items-center py-4">          {/* Logo and Company Name */}
+        <div className="flex justify-between items-center py-4">{/* Logo and Company Name */}
           <div className="flex items-center space-x-3">
             <div className="w-14 h-14 rounded-lg overflow-hidden">
               <img 
@@ -17,60 +17,69 @@ const Header: React.FC = () => {
               <h1 className="text-2xl font-bold text-gray-900">RS Car Point</h1>
               <p className="text-sm text-gray-600">Where Your Choice</p>
             </div>
-          </div>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          </div>          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1">
             <a
               href="#home"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               Home
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
               href="#inventory"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               Inventory
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
               href="#services"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               Services
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
               href="#financing"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               Financing
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
               href="#about"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               About Us
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
             <a
               href="#contact"
-              className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
             >
               Contact
+              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
             </a>
           </nav>          {/* Contact Info & CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="text-right">
-              <p className="text-sm text-gray-600">Call Randika</p>
-              <p className="font-bold text-gray-900">071 472 7813</p>
+          <div className="hidden lg:flex items-center space-x-6">
+            <div className="flex items-center space-x-3 text-right">
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-xs text-gray-500 font-medium">Call Randika</p>
+                <p className="font-bold text-gray-900 text-sm">071 472 7813</p>
+              </div>
             </div>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md">
+            <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
               Get Quote
             </button>
-          </div>
-
-          {/* Mobile Menu Button */}
+          </div>          {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100"
+            className="md:hidden p-3 rounded-lg text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 border border-gray-200 hover:border-blue-200"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <svg
@@ -97,51 +106,69 @@ const Header: React.FC = () => {
               )}
             </svg>
           </button>
-        </div>
-
-        {/* Mobile Navigation */}
+        </div>        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-gray-200">
-            <nav className="flex flex-col space-y-4">
+          <div className="md:hidden py-4 border-t border-gray-200 bg-gradient-to-b from-white to-blue-50">
+            <nav className="flex flex-col space-y-2">
               <a
                 href="#home"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Home
               </a>
               <a
                 href="#inventory"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Inventory
               </a>
               <a
                 href="#services"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Services
               </a>
               <a
                 href="#financing"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Financing
               </a>
               <a
                 href="#about"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 About Us
               </a>
               <a
                 href="#contact"
-                className="text-gray-700 hover:text-blue-600 font-medium transition duration-300"
+                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
               >
                 Contact
-              </a>              <div className="pt-4 border-t border-gray-200">
-                <p className="text-sm text-gray-600 mb-2">Call Randika: 071 472 7813</p>
-                <p className="text-sm text-gray-600 mb-2">Call Yushan: 076 396 2388</p>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+              </a>              <div className="pt-4 mt-4 border-t border-gray-300">
+                <div className="flex items-center space-x-2 mb-3 px-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium">Call Randika</p>
+                    <p className="font-bold text-gray-900 text-sm">071 472 7813</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2 mb-4 px-4">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs text-gray-500 font-medium">Call Yushan</p>
+                    <p className="font-bold text-gray-900 text-sm">076 396 2388</p>
+                  </div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-lg transform hover:-translate-y-0.5">
                   Get Quote
                 </button>
               </div>

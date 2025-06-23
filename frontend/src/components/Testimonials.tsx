@@ -84,34 +84,34 @@ const Testimonials: React.FC = () => {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6 rounded-full"></div>
         </div>        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 overflow-hidden"
+              className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 overflow-hidden"
             >              {/* Customer Photo - Rectangle Format */}
               <div className="relative overflow-hidden">
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-full h-64 object-cover object-center"
+                  className="w-full h-48 object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
               </div>
 
               {/* Customer Info and Feedback */}
-              <div className="p-6">
+              <div className="p-4">
                 {/* Customer Name */}
-                <h4 className="text-xl font-bold text-gray-900 mb-2 text-center">{testimonial.name}</h4>
-                <p className="text-blue-600 font-medium text-center mb-4">{testimonial.role}</p>
+                <h4 className="text-lg font-bold text-gray-900 mb-1 text-center">{testimonial.name}</h4>
+                <p className="text-blue-600 font-medium text-center mb-3 text-sm">{testimonial.role}</p>
 
                 {/* Star Rating */}
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-3">
                   {renderStars(testimonial.rating)}
                 </div>
 
                 {/* Feedback */}
-                <p className="text-gray-700 leading-relaxed text-center italic">
+                <p className="text-gray-700 leading-relaxed text-center italic text-sm">
                   "{testimonial.quote}"
                 </p>
               </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 
-const VehicleBrands: React.FC = () => {
-  const brands = [
+const VehicleBrands: React.FC = () => {  const brands = [
     {
       id: 1,
       name: "Toyota",
@@ -25,6 +24,18 @@ const VehicleBrands: React.FC = () => {
       name: "Bajaj",
       logo: require('../assets/Brands/bajaj.png'),
       description: "Inspiring Confidence"
+    },
+    {
+      id: 5,
+      name: "Nissan",
+      logo: require('../assets/Brands/nissan.jpeg'),
+      description: "Innovation That Excites"
+    },
+    {
+      id: 6,
+      name: "Mitsubishi",
+      logo: require('../assets/Brands/mitsubishi.jpg'),
+      description: "Drive Your Ambition"
     }
   ];
 
@@ -47,32 +58,30 @@ const VehicleBrands: React.FC = () => {
             ensuring quality and performance in every purchase.
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6 rounded-full"></div>
-        </div>
-
-        {/* Brands Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        </div>        {/* Brands Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-16">
           {brands.map((brand) => (
             <div
               key={brand.id}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2"
+              className="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1"
             >
               <div className="text-center">
                 {/* Brand Logo */}
-                <div className="mb-6 flex items-center justify-center h-20">
+                <div className="mb-3 flex items-center justify-center h-12">
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="max-h-16 max-w-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                    className="max-h-10 max-w-full object-contain transition-all duration-300"
                   />
                 </div>
                 
                 {/* Brand Name */}
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-sm font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors duration-300">
                   {brand.name}
                 </h3>
                 
                 {/* Brand Description */}
-                <p className="text-gray-600 text-sm font-medium">
+                <p className="text-gray-600 text-xs font-medium">
                   {brand.description}
                 </p>
               </div>
@@ -86,9 +95,8 @@ const VehicleBrands: React.FC = () => {
             <div>
               <div className="text-4xl lg:text-5xl font-bold mb-2">500+</div>
               <div className="text-blue-100 font-medium">Vehicles Sold</div>
-            </div>
-            <div>
-              <div className="text-4xl lg:text-5xl font-bold mb-2">4</div>
+            </div>            <div>
+              <div className="text-4xl lg:text-5xl font-bold mb-2">6</div>
               <div className="text-blue-100 font-medium">Trusted Brands</div>
             </div>
             <div>
