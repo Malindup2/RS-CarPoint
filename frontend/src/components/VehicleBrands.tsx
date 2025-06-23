@@ -60,22 +60,12 @@ const VehicleBrands: React.FC = () => {  const brands = [
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6 rounded-full"></div>
         </div>        {/* Brands Grid */}
-        <motion.div 
-          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-16"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, staggerChildren: 0.1 }}
-          viewport={{ once: true }}
-        >
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-16">
           {brands.map((brand, index) => (
             <motion.div
               key={brand.id}
               className="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 p-4 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              viewport={{ once: true }}
             >
               <div className="text-center">
                 {/* Brand Logo */}
@@ -96,9 +86,10 @@ const VehicleBrands: React.FC = () => {  const brands = [
                   {brand.description}
                 </p>
               </div>
-            </motion.div>
-          ))}
-        </motion.div>        {/* Statistics Section */}
+            </motion.div>          ))}
+        </div>
+
+        {/* Statistics Section */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 lg:p-12 text-white">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>

@@ -47,37 +47,20 @@ const WhyChooseUs: React.FC = () => {
 
   return (
     <section className="py-20 bg-white relative overflow-hidden">
-      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
-        {/* Section Header */}
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">        {/* Section Header */}
+        <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
             Why Choose Us?
           </h2>
-        </motion.div>
+        </div>
 
         {/* Features Grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, staggerChildren: 0.1 }}
-          viewport={{ once: true }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.id}
               className="bg-gray-50 rounded-2xl p-8 text-center hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 group"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              viewport={{ once: true }}
             >
               {/* Icon */}
               <div className="mb-6 flex justify-center">
@@ -95,9 +78,8 @@ const WhyChooseUs: React.FC = () => {
               <p className="text-gray-600 text-sm leading-relaxed">
                 {feature.description}
               </p>
-            </motion.div>
-          ))}
-        </motion.div>
+            </motion.div>          ))}
+        </div>
       </div>
     </section>
   );

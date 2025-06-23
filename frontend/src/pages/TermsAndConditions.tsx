@@ -1,12 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import { Link } from 'react-router-dom';
 
 const TermsAndConditions: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* Header */}
+      <motion.header 
+        className="bg-white shadow-lg sticky top-0 z-50"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 py-4">          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <img src={require('../assets/rs.jpg')} alt="RS Car Point" className="h-12 w-12 rounded-lg object-cover" />
+              <div>
+                <h1 className="text-xl font-bold text-gray-900">RS Car Point</h1>
+                <p className="text-sm text-blue-600 font-medium">Where Your Choice</p>
+              </div>
+            </Link>
+
+            <Link 
+              to="/signin"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition duration-300"
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </motion.header>
 
       {/* Main Content */}
       <main className="py-16">
@@ -131,7 +154,8 @@ const TermsAndConditions: React.FC = () => {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes to Terms</h2>                  <p className="text-gray-700 leading-relaxed">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">11. Changes to Terms</h2>
+                  <p className="text-gray-700 leading-relaxed">
                     We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting on our website. Your continued use of our services after changes are posted constitutes acceptance of the modified terms.
                   </p>
                 </section>
@@ -142,7 +166,14 @@ const TermsAndConditions: React.FC = () => {
         </div>
       </main>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8">
+        <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 text-center">
+          <p className="text-gray-400">
+            © 2025 RS Car Point. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

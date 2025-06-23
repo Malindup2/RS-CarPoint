@@ -3,8 +3,7 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-const Blog: React.FC = () => {
-  const blogPosts = [
+const Blog: React.FC = () => {  const blogPosts = [
     {
       id: 1,
       title: "Aluth Avurudu Celebration 2025",
@@ -13,9 +12,9 @@ const Blog: React.FC = () => {
       excerpt: "RS Car Point celebrated the traditional Sinhala and Tamil New Year with our team and customers. A day filled with traditional games, delicious food, and community spirit.",
       content: "Our annual Aluth Avurudu celebration brought together our entire RS Car Point family for a day of traditional festivities. The event featured traditional Sri Lankan games, authentic cuisine, and cultural performances. It was a wonderful opportunity to strengthen bonds with our team members and valued customers while celebrating our rich cultural heritage.",
       images: [
-        { src: require('../assets/Blogs/b1.jpg'), caption: "Traditional games and activities" },
-        { src: require('../assets/Blogs/b3.jpg'), caption: "Team celebration moments" },
-        { src: require('../assets/Blogs/b4.jpg'), caption: "Cultural performances and entertainment" }
+        { src: require('../assets/Blogs/b4.jpg'), caption: "Traditional games and activities" },
+        { src: require('../assets/Blogs/b5.jpg'), caption: "Team celebration moments" },
+        { src: require('../assets/Blogs/b6.jpg'), caption: "Cultural performances and entertainment" }
       ],
       author: "RS Car Point Team",
       readTime: "3 min read"
@@ -26,10 +25,10 @@ const Blog: React.FC = () => {
       date: "March 22, 2025",
       category: "Religious Events",
       excerpt: "We organized a special Pirith chanting ceremony to invoke blessings for our business and customers. A peaceful and spiritual event that brought good fortune to RS Car Point.",
-      content: "In keeping with our Buddhist traditions, RS Car Point organized a sacred Pirith chanting ceremony at our showroom. The ceremony was conducted by respected monks from the local temple, creating a spiritually enriching environment. This blessing ceremony was organized to invoke protection and prosperity for our business and all our valued customers.",
-      images: [
-        { src: require('../assets/Blogs/b5.jpg'), caption: "Monks conducting the Pirith ceremony" },
-        { src: require('../assets/Blogs/b6.jpg'), caption: "Peaceful spiritual atmosphere" }
+      content: "In keeping with our Buddhist traditions, RS Car Point organized a sacred Pirith chanting ceremony at our showroom. The ceremony was conducted by respected monks from the local temple, creating a spiritually enriching environment. This blessing ceremony was organized to invoke protection and prosperity for our business and all our valued customers.",      images: [
+        { src: require('../assets/Blogs/b1.jpg'), caption: "Monks conducting the Pirith ceremony" },
+        { src: require('../assets/Blogs/b2.jpg'), caption: "Sacred ritual preparations" },
+        { src: require('../assets/Blogs/b3.jpg'), caption: "Peaceful spiritual atmosphere" }
       ],
       author: "RS Car Point Management",
       readTime: "2 min read"

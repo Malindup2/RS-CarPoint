@@ -85,22 +85,12 @@ const Testimonials: React.FC = () => {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-6 rounded-full"></div>
         </div>        {/* Testimonials Grid */}
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, staggerChildren: 0.2 }}
-          viewport={{ once: true }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.id}
               className="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-blue-200 transform hover:-translate-y-1 overflow-hidden"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{ y: -8, scale: 1.02 }}
-              viewport={{ once: true }}
             >{/* Customer Photo - Rectangle Format */}
               <div className="relative overflow-hidden">
                 <img
@@ -127,7 +117,9 @@ const Testimonials: React.FC = () => {
               </div>
             </motion.div>
           ))}
-        </motion.div>        {/* Location Images Section */}
+        </div>
+
+        {/* Location Images Section */}
         <div className="mt-20">
           <div className="text-center mb-12">
             <h3 className="text-3xl font-bold text-gray-900 mb-4">
@@ -138,15 +130,8 @@ const Testimonials: React.FC = () => {
               Experience our complete range of vehicles in person.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto mt-4 rounded-full"></div>
-          </div>
-          
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, staggerChildren: 0.15 }}
-            viewport={{ once: true }}
-          >
+          </div>          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { image: require('../assets/location/s1.jpg'), title: "Showroom Exterior" },
               { image: require('../assets/location/s2.jpg'), title: "Vehicle Display Area" },
@@ -156,11 +141,7 @@ const Testimonials: React.FC = () => {
               <motion.div
                 key={index}
                 className="relative group overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -5, scale: 1.02 }}
-                viewport={{ once: true }}
               >
                 <div className="relative overflow-hidden rounded-xl">
                   <img
@@ -172,10 +153,9 @@ const Testimonials: React.FC = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                     <h4 className="text-lg font-semibold">{location.title}</h4>
                   </div>
-                </div>
-              </motion.div>
+                </div>              </motion.div>
             ))}
-          </motion.div>
+          </div>
           
           <div className="text-center mt-12">
             <p className="text-gray-600 mb-6">
