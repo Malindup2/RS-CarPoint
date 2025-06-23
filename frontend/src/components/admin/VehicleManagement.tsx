@@ -6,7 +6,6 @@ import {
   faSearch, 
   faFilter,
   faSort,
-  faCar,
   faEdit, 
   faTrash,
   faEye
@@ -43,6 +42,7 @@ const VehicleManagement: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [sortBy, setSortBy] = useState<string>('addedDate');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [updatingStatus, setUpdatingStatus] = useState<number | null>(null);
 
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -107,11 +107,63 @@ const VehicleManagement: React.FC = () => {
       alert('Vehicle deleted successfully!');
     }
   };
+  const handleStatusChange = async (vehicleId: number, newStatus: Vehicle['status']) => {
+    try {
+      setUpdatingStatus(vehicleId); // Set loading state
+      // Find the vehicle to update
+      const vehicleToUpdate = vehicles.find(v => v.id === vehicleId);
+      if (!vehicleToUpdate) return;      // Update the vehicle status in the backend
+      await api.updateVehicle(vehicleId.toString(), {
+        ...vehicleToUpdate,
+        status: newStatus
+      });
 
-  const handleStatusChange = (vehicleId: number, newStatus: Vehicle['status']) => {
-    setVehicles(vehicles.map(vehicle => 
-      vehicle.id === vehicleId ? { ...vehicle, status: newStatus } : vehicle
-    ));
+      // If marking as sold, create a deal record
+      if (newStatus === 'Sold') {
+        try {
+          await api.createDeal({
+            vehicleId: vehicleId,
+            vehicle: vehicleToUpdate,
+            salePrice: vehicleToUpdate.price,
+            purchasePrice: vehicleToUpdate.price * 0.7, // Estimate purchase price as 70% of sale price
+            status: 'completed',
+            completedDate: new Date().toISOString(),
+            customerName: 'Walk-in Customer', // Default customer name
+            customerEmail: 'customer@example.com', // Default email
+            notes: `Vehicle sold through admin panel on ${new Date().toLocaleDateString()}`
+          });
+        } catch (dealError) {
+          console.error('Failed to create deal record:', dealError);
+          // Don't fail the status update if deal creation fails
+        }
+      }
+
+      // Update the local state
+      setVehicles(vehicles.map(vehicle => 
+        vehicle.id === vehicleId ? { ...vehicle, status: newStatus } : vehicle
+      ));      // Show success message
+      Swal.fire({
+        title: 'Success!',
+        text: `Vehicle marked as ${newStatus.toLowerCase()} successfully!`,
+        icon: 'success',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
+      // Trigger analytics refresh
+      localStorage.setItem('vehicleStatusChanged', Date.now().toString());
+      window.dispatchEvent(new CustomEvent('vehicleStatusChanged'));
+
+    } catch (error) {
+      console.error('Error updating vehicle status:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to update vehicle status. Please try again.',
+        icon: 'error'
+      });
+    } finally {
+      setUpdatingStatus(null); // Reset loading state
+    }
   };
 
   const getUniqueMakes = () => {
@@ -379,22 +431,36 @@ const VehicleManagement: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300"
-          >            {/* Vehicle Image Placeholder */}
-            <div className="h-48 bg-gradient-to-r from-blue-100 to-slate-100 flex items-center justify-center">
-              <div className="p-4 bg-white rounded-full shadow-lg">
-                <img src={`data:image/jpeg;base64,${vehicle.imageBase64}`} alt="Vehicle" className="w-16 h-16 object-cover" />
-              </div>
-            </div>
-
-            {/* Vehicle Details */}
+          >            {/* Vehicle Image */}
+            <div className="h-48 relative overflow-hidden">
+              {vehicle.imageBase64 ? (
+                <>
+                  <img 
+                    src={`data:image/jpeg;base64,${vehicle.imageBase64}`} 
+                    alt={`${vehicle.make} ${vehicle.model}`}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  {/* Status Badge Overlay */}
+                  <div className="absolute top-3 right-3">
+                    <span className={`px-3 py-1 text-xs font-semibold rounded-full shadow-lg ${getStatusColor(vehicle.status)}`}>
+                      {vehicle.status}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="w-full h-full bg-gradient-to-r from-blue-100 to-slate-100 flex items-center justify-center">
+                  <div className="text-center text-gray-500">
+                    <FontAwesomeIcon icon={faEye} className="text-4xl mb-2 opacity-50" />
+                    <p className="text-sm">No Image Available</p>
+                  </div>
+                </div>
+              )}
+            </div>            {/* Vehicle Details */}
             <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
+              <div className="mb-4">
                 <h3 className="text-xl font-bold text-gray-900">
                   {vehicle.make} {vehicle.model}
                 </h3>
-                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getStatusColor(vehicle.status)}`}>
-                  {vehicle.status}
-                </span>
               </div>
 
               <div className="space-y-3 text-sm text-gray-600">
@@ -444,27 +510,31 @@ const VehicleManagement: React.FC = () => {
                     <FontAwesomeIcon icon={faTrash} />
                     <span>Delete</span>
                   </button>
-                </div>
-
-                {/* Status Change Buttons */}
+                </div>                {/* Status Change Buttons */}
                 {vehicle.status !== 'Sold' && (
                   <div className="mt-3 grid grid-cols-2 gap-3">
                     <button
                       onClick={() => handleStatusChange(vehicle.id, 'Reserved')}
-                      disabled={vehicle.status === 'Reserved'}
+                      disabled={vehicle.status === 'Reserved' || updatingStatus === vehicle.id}
                       className={`px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
-                        vehicle.status === 'Reserved'
+                        vehicle.status === 'Reserved' || updatingStatus === vehicle.id
                           ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                           : 'bg-yellow-50 text-yellow-600 hover:bg-yellow-100'
                       }`}
                     >
-                      Reserve
+                      {updatingStatus === vehicle.id ? 'Updating...' : 
+                       vehicle.status === 'Reserved' ? 'Reserved' : 'Reserve'}
                     </button>
                     <button
                       onClick={() => handleStatusChange(vehicle.id, 'Sold')}
-                      className="px-3 py-2 bg-green-50 text-green-600 hover:bg-green-100 rounded-xl text-sm transition-all duration-200"
+                      disabled={updatingStatus === vehicle.id}
+                      className={`px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+                        updatingStatus === vehicle.id
+                          ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                          : 'bg-green-50 text-green-600 hover:bg-green-100'
+                      }`}
                     >
-                      Mark Sold
+                      {updatingStatus === vehicle.id ? 'Updating...' : 'Mark Sold'}
                     </button>
                   </div>
                 )}

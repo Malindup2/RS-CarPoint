@@ -133,3 +133,29 @@ export async function createDeal(data: any) {
   return handleResponse(res);
 }
 
+// Sales Analytics APIs
+export async function getSalesData(timeRange: string = '1year') {
+  const res = await fetch(`${API_BASE}/analytics/sales?timeRange=${timeRange}`, { headers: authHeaders() });
+  return handleResponse(res);
+}
+
+export async function getVehicleTypeSales(timeRange: string = '1year') {
+  const res = await fetch(`${API_BASE}/analytics/vehicle-types?timeRange=${timeRange}`, { headers: authHeaders() });
+  return handleResponse(res);
+}
+
+export async function getDealerPerformance(timeRange: string = '1year') {
+  const res = await fetch(`${API_BASE}/analytics/dealer-performance?timeRange=${timeRange}`, { headers: authHeaders() });
+  return handleResponse(res);
+}
+
+export async function getRevenueMetrics(timeRange: string = '1year') {
+  const res = await fetch(`${API_BASE}/analytics/revenue?timeRange=${timeRange}`, { headers: authHeaders() });
+  return handleResponse(res);
+}
+
+export async function getSalesReport(timeRange: string = '1year') {
+  const res = await fetch(`${API_BASE}/analytics/report?timeRange=${timeRange}`, { headers: authHeaders() });
+  return handleResponse(res);
+}
+
