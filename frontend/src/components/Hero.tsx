@@ -86,9 +86,8 @@ const Hero: React.FC = () => {
               <div className="absolute inset-0 bg-black bg-opacity-50"></div>
             </div>
 
-            {/* Content Overlay */}
-            <div className="relative z-10 h-full flex items-center">
-              <div className="container mx-auto px-4">
+            {/* Content Overlay */}            <div className="relative z-10 h-full flex items-center">
+              <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
                 <div className="max-w-3xl">
                   {/* Animated Content */}
                   <div

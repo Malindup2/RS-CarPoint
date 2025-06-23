@@ -3,7 +3,7 @@ import React from 'react';
 const CallToAction: React.FC = () => {
   return (
     <section className="py-16 bg-gradient-to-r from-gray-900 to-blue-900 text-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div>

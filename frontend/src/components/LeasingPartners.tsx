@@ -10,7 +10,7 @@ const LeasingPartners: React.FC = () => {
         }}></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-6 leading-tight">
             Our Trusted <span className="text-blue-600">Leasing Partners</span>

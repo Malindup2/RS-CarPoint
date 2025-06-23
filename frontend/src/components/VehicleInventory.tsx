@@ -1,4 +1,20 @@
 import React, { useState } from 'react';
+import { 
+  FaCar, 
+  FaMotorcycle, 
+  FaTruck, 
+  FaSearch, 
+  FaMapMarkerAlt, 
+  FaGasPump, 
+  FaCogs, 
+  FaCalendarAlt, 
+  FaTachometerAlt,
+  FaStar,
+  FaList,
+  FaTh
+} from 'react-icons/fa';
+import { GiAutoRepair } from 'react-icons/gi';
+import { MdElectricScooter } from 'react-icons/md';
 
 interface Vehicle {
   id: number;
@@ -43,6 +59,37 @@ const VehicleInventory: React.FC = () => {
 
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [sortBy, setSortBy] = useState('price-low');
+  // Helper function to render icons
+  const renderIcon = (iconName: string, className: string) => {
+    switch (iconName) {
+      case 'FaCar':
+        return <FaCar className={className} />;
+      case 'FaMotorcycle':
+        return <FaMotorcycle className={className} />;
+      case 'MdElectricScooter':
+        return <MdElectricScooter className={className} />;
+      case 'FaTruck':
+        return <FaTruck className={className} />;
+      case 'FaSearch':
+        return <FaSearch className={className} />;
+      case 'FaTh':
+        return <FaTh className={className} />;
+      case 'FaList':
+        return <FaList className={className} />;
+      case 'FaStar':
+        return <FaStar className={className} />;
+      case 'FaTachometerAlt':
+        return <FaTachometerAlt className={className} />;
+      case 'FaGasPump':
+        return <FaGasPump className={className} />;
+      case 'FaCogs':
+        return <FaCogs className={className} />;
+      case 'FaMapMarkerAlt':
+        return <FaMapMarkerAlt className={className} />;
+      default:
+        return <FaCar className={className} />;
+    }
+  };
 
   // Sample vehicle data representing Sri Lankan market
   const vehicles: Vehicle[] = [
@@ -168,14 +215,12 @@ const VehicleInventory: React.FC = () => {
       location: 'Anuradhapura',
       engineCapacity: '97cc'
     }
-  ];
-
-  const categories = [
-    { id: 'all', name: 'All Vehicles', icon: '🚗' },
-    { id: 'car', name: 'Cars', icon: '🚗' },
-    { id: 'bike', name: 'Motorcycles', icon: '🏍️' },
-    { id: 'scooter', name: 'Scooters', icon: '🛵' },
-    { id: 'threewheeler', name: 'Three Wheelers', icon: '🛺' }
+  ];  const categories = [
+    { id: 'all', name: 'All Vehicles', icon: 'FaCar' },
+    { id: 'car', name: 'Cars', icon: 'FaCar' },
+    { id: 'bike', name: 'Motorcycles', icon: 'FaMotorcycle' },
+    { id: 'scooter', name: 'Scooters', icon: 'MdElectricScooter' },
+    { id: 'threewheeler', name: 'Three Wheelers', icon: 'FaTruck' }
   ];
 
   const brands = ['All Brands', 'Toyota', 'Honda', 'Suzuki', 'Nissan', 'Mazda', 'Yamaha', 'TVS', 'Hero', 'Bajaj'];
@@ -198,59 +243,54 @@ const VehicleInventory: React.FC = () => {
     if (activeFilter.category !== 'all' && vehicle.category !== activeFilter.category) return false;
     if (activeFilter.brand !== 'all' && activeFilter.brand !== 'All Brands' && vehicle.brand !== activeFilter.brand) return false;
     return true;
-  });
-
-  return (
-    <section className="py-8 bg-gray-50">
-      <div className="container mx-auto px-4">        {/* Section Header */}
-        <div className="text-center mb-8">          {/* Logo */}
-          <div className="flex justify-center mb-6">
-            <img 
-              src={require('../assets/rs.jpg')} 
-              alt="RS Car Point Logo" 
-              className="h-20 w-auto object-contain rounded-lg"
-            />
-          </div>
-          
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+  });  return (
+    <section className="py-16 bg-gradient-to-br from-white via-blue-50 to-gray-100">
+      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="text-6xl font-bold bg-gradient-to-r from-blue-700 via-blue-600 to-black bg-clip-text text-transparent mb-8 leading-tight">
             Browse Our Vehicle Collection
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed font-medium">
             Find the perfect vehicle from our extensive collection of cars, motorcycles, scooters, and three-wheelers across Sri Lanka.
           </p>
-        </div>
-
-        {/* Category Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="mt-6 w-32 h-1 bg-gradient-to-r from-blue-600 to-black mx-auto rounded-full"></div>
+        </div>{/* Category Tabs */}        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setActiveFilter({...activeFilter, category: category.id})}
-              className={`flex items-center space-x-2 px-6 py-3 rounded-full font-medium transition duration-300 ${
+              className={`group flex items-center space-x-3 px-8 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 ${
                 activeFilter.category === category.id
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 border border-gray-200'
+                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-2xl border-2 border-blue-300'
+                  : 'bg-white text-gray-800 hover:bg-gradient-to-r hover:from-gray-50 hover:to-blue-50 hover:text-blue-700 border-2 border-gray-200 hover:border-blue-300 shadow-lg'
               }`}
             >
-              <span className="text-lg">{category.icon}</span>
-              <span>{category.name}</span>
-              <span className="bg-gray-200 text-gray-700 px-2 py-1 rounded-full text-xs">
+              {renderIcon(category.icon, "text-2xl group-hover:scale-110 transition-transform duration-300")}
+              <span className="font-semibold">{category.name}</span>
+              <span className={`px-3 py-1 rounded-full text-sm font-bold ${
+                activeFilter.category === category.id
+                  ? 'bg-white text-blue-700'
+                  : 'bg-gray-100 text-gray-600 group-hover:bg-blue-100 group-hover:text-blue-700'
+              }`}>
                 {category.id === 'all' ? vehicles.length : vehicles.filter(v => v.category === category.id).length}
               </span>
             </button>
           ))}
-        </div>
-
-        {/* Advanced Filters */}
-        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-4">
-            {/* Brand Filter */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Brand</label>
+        </div>{/* Advanced Filters */}
+        <div className="bg-gradient-to-r from-white via-gray-50 to-white rounded-3xl shadow-2xl p-8 mb-12 border-2 border-gray-100">
+          <div className="text-center mb-6">
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-black bg-clip-text text-transparent">
+              Advanced Filters
+            </h3>
+            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-black mx-auto mt-2 rounded-full"></div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-6">            {/* Brand Filter */}
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Brand</label>
               <select
                 value={activeFilter.brand}
                 onChange={(e) => setActiveFilter({...activeFilter, brand: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 {brands.map(brand => (
                   <option key={brand} value={brand}>{brand}</option>
@@ -259,12 +299,12 @@ const VehicleInventory: React.FC = () => {
             </div>
 
             {/* Price Range */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Price Range</label>
               <select
                 value={activeFilter.priceRange}
                 onChange={(e) => setActiveFilter({...activeFilter, priceRange: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >                <option value="all">All Prices</option>
                 <option value="under-500k">Under LKR 5 Lks</option>
                 <option value="500k-1m">LKR 5-10 Lks</option>
@@ -272,15 +312,13 @@ const VehicleInventory: React.FC = () => {
                 <option value="3m-5m">LKR 30-50 Lks</option>
                 <option value="over-5m">Over LKR 50 Lks</option>
               </select>
-            </div>
-
-            {/* Year Range */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+            </div>            {/* Year Range */}
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Year</label>
               <select
                 value={activeFilter.yearRange}
                 onChange={(e) => setActiveFilter({...activeFilter, yearRange: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 <option value="all">All Years</option>
                 <option value="2023-2024">2023-2024</option>
@@ -292,12 +330,12 @@ const VehicleInventory: React.FC = () => {
             </div>
 
             {/* Fuel Type */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Fuel Type</label>
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Fuel Type</label>
               <select
                 value={activeFilter.fuelType}
                 onChange={(e) => setActiveFilter({...activeFilter, fuelType: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 <option value="all">All Fuel Types</option>
                 <option value="Petrol">Petrol</option>
@@ -305,15 +343,13 @@ const VehicleInventory: React.FC = () => {
                 <option value="Hybrid">Hybrid</option>
                 <option value="Electric">Electric</option>
               </select>
-            </div>
-
-            {/* Transmission */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Transmission</label>
+            </div>            {/* Transmission */}
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Transmission</label>
               <select
                 value={activeFilter.transmission}
                 onChange={(e) => setActiveFilter({...activeFilter, transmission: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 <option value="all">All Types</option>
                 <option value="Auto">Automatic</option>
@@ -322,12 +358,12 @@ const VehicleInventory: React.FC = () => {
             </div>
 
             {/* Condition */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Condition</label>
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Condition</label>
               <select
                 value={activeFilter.condition}
                 onChange={(e) => setActiveFilter({...activeFilter, condition: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 <option value="all">All Conditions</option>
                 <option value="brand-new">Brand New</option>
@@ -337,67 +373,62 @@ const VehicleInventory: React.FC = () => {
             </div>
 
             {/* Location */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+            <div className="group">
+              <label className="block text-sm font-bold text-gray-800 mb-3 group-hover:text-blue-700 transition-colors duration-300">Location</label>
               <select
                 value={activeFilter.location}
                 onChange={(e) => setActiveFilter({...activeFilter, location: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
               >
                 {locations.map(location => (
                   <option key={location} value={location}>{location}</option>
                 ))}
               </select>
-            </div>
-
-            {/* Search Button */}
-            <div className="flex items-end">
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+            </div>            {/* Search Button */}
+            <div className="flex items-end">              <button className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-black text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                {renderIcon('FaSearch', "text-sm")}
                 Search
               </button>
             </div>
           </div>
-        </div>
-
-        {/* Results Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
-          <div className="flex items-center space-x-4 mb-4 sm:mb-0">
-            <span className="text-gray-600">
+        </div>        {/* Results Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
+          <div className="flex items-center space-x-6 mb-4 sm:mb-0">
+            <span className="text-lg font-semibold text-gray-700 bg-gray-100 px-4 py-2 rounded-xl">
               Showing {filteredVehicles.length} of {vehicles.length} vehicles
             </span>
             
             {/* View Mode Toggle */}
-            <div className="flex bg-gray-200 rounded-lg p-1">
-              <button
+            <div className="flex bg-gray-100 rounded-xl p-1 shadow-inner">              <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg transition duration-300 ${
-                  viewMode === 'grid' ? 'bg-white shadow' : 'hover:bg-gray-300'
+                className={`p-3 rounded-xl transition-all duration-300 ${
+                  viewMode === 'grid' 
+                    ? 'bg-white shadow-lg text-blue-600 transform scale-105' 
+                    : 'hover:bg-gray-200 text-gray-600'
                 }`}
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
+                {renderIcon('FaTh', "w-5 h-5")}
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg transition duration-300 ${
-                  viewMode === 'list' ? 'bg-white shadow' : 'hover:bg-gray-300'
+                className={`p-3 rounded-xl transition-all duration-300 ${
+                  viewMode === 'list' 
+                    ? 'bg-white shadow-lg text-blue-600 transform scale-105' 
+                    : 'hover:bg-gray-200 text-gray-600'
                 }`}
               >
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                </svg>
+                {renderIcon('FaList', "w-5 h-5")}
               </button>
             </div>
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center space-x-2">
-            <span className="text-gray-600">Sort by:</span>
+          <div className="flex items-center space-x-3">
+            <span className="text-lg font-semibold text-gray-700">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="px-4 py-3 border-2 border-gray-200 rounded-xl bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-500 hover:border-blue-300 transition-all duration-300 font-medium text-gray-700 shadow-sm"
             >
               <option value="price-low">Price: Low to High</option>
               <option value="price-high">Price: High to Low</option>
@@ -406,97 +437,78 @@ const VehicleInventory: React.FC = () => {
               <option value="mileage-low">Mileage: Low to High</option>
             </select>
           </div>
-        </div>
-
-        {/* Vehicle Grid/List */}
+        </div>        {/* Vehicle Grid/List */}
         <div className={`${
           viewMode === 'grid' 
-            ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6' 
-            : 'space-y-4'
-        }`}>
-          {filteredVehicles.map((vehicle) => (
+            ? 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4' 
+            : 'space-y-3'
+        }`}>{filteredVehicles.map((vehicle) => (
             <div
               key={vehicle.id}
-              className={`bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden border border-gray-100 ${
+              className={`group bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-200 hover:border-blue-300 ${
                 viewMode === 'list' ? 'flex' : ''
               }`}
             >
               {/* Vehicle Image */}
-              <div className={`relative ${viewMode === 'list' ? 'w-64 h-48' : 'h-48'} bg-gradient-to-br from-gray-200 to-gray-300`}>
-                {vehicle.featured && (
-                  <div className="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+              <div className={`relative ${viewMode === 'list' ? 'w-48 h-32' : 'h-32'} bg-gradient-to-br from-gray-100 to-gray-200 group-hover:from-blue-50 group-hover:to-gray-100 transition-all duration-300`}>                {vehicle.featured && (
+                  <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded text-xs font-bold flex items-center gap-1">
+                    {renderIcon('FaStar', "text-xs")}
                     FEATURED
                   </div>
                 )}
-                <div className="absolute top-3 right-3 bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+                <div className="absolute top-2 right-2 bg-blue-600 text-white px-2 py-1 rounded text-xs font-medium">
                   {vehicle.condition.toUpperCase()}
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-6xl">
-                    {vehicle.category === 'car' && '🚗'}
-                    {vehicle.category === 'bike' && '🏍️'}
-                    {vehicle.category === 'scooter' && '🛵'}
-                    {vehicle.category === 'threewheeler' && '🛺'}
-                  </span>
-                </div>
-              </div>
+                </div>                <div className="absolute inset-0 flex items-center justify-center">
+                  {vehicle.category === 'car' && renderIcon('FaCar', "text-4xl text-gray-500")}
+                  {vehicle.category === 'bike' && renderIcon('FaMotorcycle', "text-4xl text-gray-500")}
+                  {vehicle.category === 'scooter' && renderIcon('MdElectricScooter', "text-4xl text-gray-500")}
+                  {vehicle.category === 'threewheeler' && renderIcon('FaTruck', "text-4xl text-gray-500")}
+                </div></div>
 
               {/* Vehicle Details */}
-              <div className={`p-4 ${viewMode === 'list' ? 'flex-1' : ''}`}>
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-lg font-bold text-gray-900 line-clamp-2">
+              <div className={`p-3 ${viewMode === 'list' ? 'flex-1' : ''}`}>
+                <div className="mb-2">
+                  <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-1">
                     {vehicle.title}
                   </h3>
-                  <span className="text-xl font-bold text-blue-600 ml-2">
-                    {formatPrice(vehicle.price)}
-                  </span>
-                </div>
-
-                {/* Quick Specs */}
-                <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">📅</span>
-                    <span className="text-gray-600">{vehicle.year}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-bold text-blue-600">
+                      {formatPrice(vehicle.price)}
+                    </span>
+                    <span className="text-xs text-gray-500">{vehicle.year}</span>
                   </div>
+                </div>                {/* Compact Specs */}                <div className="grid grid-cols-2 gap-1 mb-3 text-xs">
                   <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">⛽</span>
-                    <span className="text-gray-600">{vehicle.fuelType}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">🏁</span>
+                    {renderIcon('FaTachometerAlt', "text-gray-400 text-sm")}
                     <span className="text-gray-600">{formatMileage(vehicle.mileage)}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">⚙️</span>
+                    {renderIcon('FaGasPump', "text-gray-400 text-sm")}
+                    <span className="text-gray-600">{vehicle.fuelType}</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    {renderIcon('FaCogs', "text-gray-400 text-sm")}
                     <span className="text-gray-600">{vehicle.transmission}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">🏭</span>
-                    <span className="text-gray-600">{vehicle.engineCapacity}</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <span className="text-gray-400">📍</span>
+                    {renderIcon('FaMapMarkerAlt', "text-gray-400 text-sm")}
                     <span className="text-gray-600">{vehicle.location}</span>
                   </div>
-                </div>
-
-                {/* Action Buttons */}
+                </div>{/* Action Buttons */}
                 <div className="flex gap-2">
-                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300 text-sm">
+                  <button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-1.5 px-3 rounded text-xs transition duration-300">
                     View Details
                   </button>
-                  <button className="flex-1 border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium py-2 px-4 rounded-lg transition duration-300 text-sm">
-                    Contact Seller
+                  <button className="flex-1 border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium py-1.5 px-3 rounded text-xs transition duration-300">
+                    Contact
                   </button>
                 </div>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Load More Button */}
-        <div className="text-center mt-12">
-          <button className="bg-gray-900 hover:bg-black text-white font-bold py-3 px-8 rounded-lg transition duration-300 shadow-md">
+        </div>        {/* Load More Button */}
+        <div className="text-center mt-16">
+          <button className="bg-gradient-to-r from-black via-gray-800 to-blue-900 hover:from-blue-900 hover:via-black hover:to-gray-900 text-white font-bold py-4 px-12 rounded-2xl transition-all duration-300 shadow-2xl transform hover:scale-105 hover:shadow-3xl">
             Load More Vehicles
           </button>
         </div>

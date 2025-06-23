@@ -3,9 +3,8 @@ import React, { useState } from 'react';
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <header className="bg-white shadow-lg border-b-2 border-blue-600">
-      <div className="container mx-auto px-4">
+  return (    <header className="bg-white shadow-lg border-b-2 border-blue-600">
+      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
         <div className="flex justify-between items-center py-4">          {/* Logo and Company Name */}
           <div className="flex items-center space-x-3">
             <div className="w-14 h-14 rounded-lg overflow-hidden">
