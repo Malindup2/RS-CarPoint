@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer: React.FC = () => {
   return (
@@ -162,12 +163,12 @@ const Footer: React.FC = () => {
             <p className="text-gray-400 text-sm">
               © 2025 RS Car Point. All rights reserved.
             </p>            <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition duration-300">
+              <Link to="/privacy-policy" className="text-gray-400 hover:text-white text-sm transition duration-300">
                 Privacy Policy
-              </a>
-              <a href="/terms-and-conditions" className="text-gray-400 hover:text-white text-sm transition duration-300">
+              </Link>
+              <Link to="/terms-and-conditions" className="text-gray-400 hover:text-white text-sm transition duration-300">
                 Terms & Conditions
-              </a>
+              </Link>
               <a href="#" className="text-gray-400 hover:text-white text-sm transition duration-300">
                 Cookie Policy
               </a>

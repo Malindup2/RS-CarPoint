@@ -1,32 +1,27 @@
 import React from 'react';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import VehicleInventory from './components/VehicleInventory';
-import VehicleBrands from './components/VehicleBrands';
-import WhyChooseUs from './components/WhyChooseUs';
-import Testimonials from './components/Testimonials';
-import LeasingPartners from './components/LeasingPartners';
-import CallToAction from './components/CallToAction';
-import Footer from './components/Footer';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Services from './pages/Services';
+import Blog from './pages/Blog';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsAndConditions from './pages/TermsAndConditions';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import './App.css';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main>
-        <Hero />
-        <VehicleInventory />
-        <VehicleBrands />
-        <WhyChooseUs />
-        <Testimonials />
-        <LeasingPartners />
-        <CallToAction />
-      </main>
-      <Footer />
-      <FloatingWhatsApp />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-gray-50">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        </Routes>
+        <FloatingWhatsApp />
+      </div>
+    </Router>
   );
 }
 

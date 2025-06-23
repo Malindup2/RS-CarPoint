@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   return (    <motion.header 
       className="bg-white shadow-xl border-b-4 border-blue-600 sticky top-0 z-50 backdrop-blur-sm bg-white/95"
@@ -25,27 +29,39 @@ const Header: React.FC = () => {
             </div>
           </div>          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
-            <a
-              href="#home"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
+            <Link
+              to="/"
+              className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group ${
+                isActive('/') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+              }`}
             >
               Home
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
-            <a
-              href="#services"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
+              <span className={`absolute bottom-0 left-1/2 h-0.5 bg-blue-600 transition-all duration-300 transform -translate-x-1/2 ${
+                isActive('/') ? 'w-8' : 'w-0 group-hover:w-8'
+              }`}></span>
+            </Link>
+            <Link
+              to="/services"
+              className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group ${
+                isActive('/services') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+              }`}
             >
               Services
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
-            <a
-              href="#blog"
-              className="relative px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group"
+              <span className={`absolute bottom-0 left-1/2 h-0.5 bg-blue-600 transition-all duration-300 transform -translate-x-1/2 ${
+                isActive('/services') ? 'w-8' : 'w-0 group-hover:w-8'
+              }`}></span>
+            </Link>
+            <Link
+              to="/blog"
+              className={`relative px-4 py-2 font-medium transition-all duration-300 rounded-lg hover:bg-blue-50 group ${
+                isActive('/blog') ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600'
+              }`}
             >
               Blog
-              <span className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-8 group-hover:left-1/2 transform -translate-x-1/2"></span>
-            </a>
+              <span className={`absolute bottom-0 left-1/2 h-0.5 bg-blue-600 transition-all duration-300 transform -translate-x-1/2 ${
+                isActive('/blog') ? 'w-8' : 'w-0 group-hover:w-8'
+              }`}></span>
+            </Link>
           </nav>{/* Contact Info & CTA */}
           <div className="hidden lg:flex items-center space-x-6">
             <div className="flex items-center space-x-3 text-right">
@@ -101,24 +117,33 @@ const Header: React.FC = () => {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
             >            <nav className="flex flex-col space-y-2">
-              <a
-                href="#home"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
+              <Link
+                to="/"
+                className={`px-4 py-3 font-medium transition-all duration-300 rounded-lg ${
+                  isActive('/') ? 'text-blue-600 bg-blue-100' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-100'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Home
-              </a>
-              <a
-                href="#services"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
+              </Link>
+              <Link
+                to="/services"
+                className={`px-4 py-3 font-medium transition-all duration-300 rounded-lg ${
+                  isActive('/services') ? 'text-blue-600 bg-blue-100' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-100'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Services
-              </a>
-              <a
-                href="#blog"
-                className="px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-100 font-medium transition-all duration-300 rounded-lg"
+              </Link>
+              <Link
+                to="/blog"
+                className={`px-4 py-3 font-medium transition-all duration-300 rounded-lg ${
+                  isActive('/blog') ? 'text-blue-600 bg-blue-100' : 'text-gray-700 hover:text-blue-600 hover:bg-blue-100'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
               >
                 Blog
-              </a><div className="pt-4 mt-4 border-t border-gray-300">
+              </Link><div className="pt-4 mt-4 border-t border-gray-300">
                 <div className="flex items-center space-x-2 mb-3 px-4">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                     <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">

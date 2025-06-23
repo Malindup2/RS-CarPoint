@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const PrivacyPolicy: React.FC = () => {
   return (
@@ -11,20 +12,21 @@ const PrivacyPolicy: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <img src={require('../assets/logo.png')} alt="RS Car Point" className="h-12 w-auto" />
+        <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16 py-4">          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <img src={require('../assets/rs.jpg')} alt="RS Car Point" className="h-12 w-12 rounded-lg object-cover" />
               <div>
                 <h1 className="text-xl font-bold text-gray-900">RS Car Point</h1>
                 <p className="text-sm text-blue-600 font-medium">Where Your Choice</p>
               </div>
-            </div>            <a 
-              href="/signin"
+            </Link>
+
+            <Link 
+              to="/signin"
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition duration-300"
             >
               Sign In
-            </a>
+            </Link>
           </div>
         </div>
       </motion.header>
