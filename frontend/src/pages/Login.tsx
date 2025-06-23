@@ -15,12 +15,19 @@ const Login: React.FC = () => {
       [name]: value
     }));
   };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle login submission here
     console.log('Login submitted:', formData);
-    // You can add API call or other logic here
+    
+    // Simple demo logic - in real app, check credentials with backend
+    if (formData.email === 'admin@rscarpoint.com' && formData.password === 'admin123') {
+      // Redirect to admin dashboard
+      window.location.href = '/admin';
+    } else {
+      // Regular user login logic
+      console.log('Regular user login');
+    }
   };
 
   return (    <div className="min-h-screen relative flex items-center justify-center">      {/* Video Background */}
@@ -104,15 +111,19 @@ const Login: React.FC = () => {
               className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 backdrop-blur-sm"
             >
               Sign In
-            </button>
-
-            <div className="text-center">
+            </button>            <div className="text-center">
               <p className="text-sm text-gray-200">
                 Don't have an account?{' '}
                 <Link to="/broker-signup" className="font-medium text-blue-300 hover:text-blue-200">
                   Become a Partner
                 </Link>
               </p>
+              
+              {/* Demo Credentials */}
+              <div className="mt-4 p-3 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg border border-white border-opacity-20">
+                <p className="text-xs text-gray-200 mb-2">Demo Credentials:</p>
+                <p className="text-xs text-blue-200">Admin: admin@rscarpoint.com / admin123</p>
+              </div>
             </div>
           </form>
         </motion.div>
