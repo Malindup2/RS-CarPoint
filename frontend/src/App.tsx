@@ -3,6 +3,8 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 import Features from './components/Features';
 import VehicleInventory from './components/VehicleInventory';
+import VehicleBrands from './components/VehicleBrands';
+import Testimonials from './components/Testimonials';
 import LeasingPartners from './components/LeasingPartners';
 import CallToAction from './components/CallToAction';
 import Footer from './components/Footer';
@@ -16,6 +18,8 @@ function App() {
         <Hero />
         <Features />
         <VehicleInventory />
+        <VehicleBrands />
+        <Testimonials />
         <LeasingPartners />
         <CallToAction />
       </main>
