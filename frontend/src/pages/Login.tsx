@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import * as api from '../api';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,18 +18,29 @@ const Login: React.FC = () => {
       [name]: value
     }));
   };
-  const handleSubmit = (e: React.FormEvent) => {
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login submission here
     console.log('Login submitted:', formData);
-    
-    // Simple demo logic - in real app, check credentials with backend
-    if (formData.email === 'admin@rscarpoint.com' && formData.password === 'admin123') {
-      // Redirect to admin dashboard
-      window.location.href = '/admin';
-    } else {
-      // Regular user login logic
-      console.log('Regular user login');
+
+    try {
+      const data = await api.login(formData.email, formData.password);
+      console.log('Login successful:', data);
+      
+      // Store token if provided
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      
+      // Redirect based on user role
+      if (data.role === 'admin') {
+        window.location.href = '/admin';
+      } else {
+        window.location.href = '/dashboard';
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      alert('Invalid credentials. Please try again.');
     }
   };
 
@@ -113,19 +125,12 @@ const Login: React.FC = () => {
               className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 backdrop-blur-sm"
             >
               Sign In
-            </button>            <div className="text-center">
-              <p className="text-sm text-gray-200">
+            </button>            <div className="text-center">              <p className="text-sm text-gray-200">
                 Don't have an account?{' '}
                 <Link to="/broker-signup" className="font-medium text-blue-300 hover:text-blue-200">
                   Become a Partner
                 </Link>
               </p>
-              
-              {/* Demo Credentials */}
-              <div className="mt-4 p-3 bg-white bg-opacity-10 backdrop-blur-sm rounded-lg border border-white border-opacity-20">
-                <p className="text-xs text-gray-200 mb-2">Demo Credentials:</p>
-                <p className="text-xs text-blue-200">Admin: admin@rscarpoint.com / admin123</p>
-              </div>
             </div>
           </form>
         </motion.div>
