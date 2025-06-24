@@ -13,20 +13,22 @@ const Header: React.FC = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
-        <div className="flex justify-between items-center py-4">{/* Logo and Company Name */}
-          <div className="flex items-center space-x-3">
-            <div className="w-14 h-14 rounded-lg overflow-hidden">
+    >      <div className="container mx-auto px-6 lg:px-8 xl:px-12 2xl:px-16">
+        <div className="flex justify-between items-center py-2">
+          {/* Logo and Company Name */}
+          <div className="flex items-center space-x-4">
+            <div className="w-16 h-16 rounded-lg overflow-hidden">
               <img 
                 src={require('../assets/rs.jpg')} 
                 alt="RS Car Point Logo" 
                 className="w-full h-full object-cover"
               />
-            </div>            <div>
-              <p className="text-sm text-gray-600">Where Your Choice</p>
             </div>
-          </div>          {/* Desktop Navigation */}
+            <div>
+              <h1 className="text-xl font-bold text-gray-800">RS Carpoint</h1>
+              <p className="text-sm text-gray-600">"where your choice"</p>
+            </div>
+          </div>{/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-1">
             <Link
               to="/"
