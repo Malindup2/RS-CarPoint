@@ -55,7 +55,14 @@ const AdminSidebar: React.FC<AdminSidebarProps> = ({ activeTab, setActiveTab }) 
       </nav>
 
       {/* Logout Button */}
-      <div className="px-4 mt-8">        <button className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-red-600 hover:text-white transition-all duration-200">
+      <div className="px-4 mt-8">        
+        <button 
+          onClick={() => {
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+          }}
+          className="w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-red-600 hover:text-white transition-all duration-200"
+        >
           <FontAwesomeIcon icon={faSignOutAlt} className="text-xl" />
           <span className="font-medium">Logout</span>
         </button>

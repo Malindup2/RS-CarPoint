@@ -43,9 +43,6 @@ const AdminDashboard: React.FC = () => {
                   <p className="text-sm font-medium text-gray-700">Welcome back,</p>
                   <p className="text-sm text-gray-500">Administrator</p>
                 </div>
-                <button className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-2 rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                  Logout
-                </button>
               </div>
             </div>
           </div>
