@@ -8,6 +8,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import BrokerSignup from './pages/BrokerSignup';
 import Login from './pages/Login';
 import AdminDashboard from './pages/AdminDashboard';
+import BrokerDashboard from './pages/BrokerDashboard';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import './App.css';
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/broker-signup" element={<BrokerSignup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/dashboard" element={<BrokerDashboard />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         </Routes>

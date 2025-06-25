@@ -21,7 +21,7 @@ import com.example.rscarpoint.repository.UserRepository;
 import com.example.rscarpoint.security.JwtUtil;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3003", "http://localhost:3004"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3001", "http://localhost:3003", "http://localhost:3004"}, allowCredentials = "true")
 @RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
@@ -48,20 +48,48 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
         String email = loginRequest.get("email");
         String password = loginRequest.get("password");
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(email, password)
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        User user = userRepository.findAll().stream()
-                .filter(u -> u.getEmail().equalsIgnoreCase(email))
-                .findFirst().orElse(null);
-        if (user == null) {
-            return ResponseEntity.status(401).body("Invalid credentials");
+        
+        System.out.println("Login attempt for email: " + email);
+        
+        // Try to find the user manually first to check if it exists
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser == null) {
+            System.out.println("User not found with findByEmail, trying manual search...");
+            existingUser = userRepository.findAll().stream()
+                    .filter(u -> email.equalsIgnoreCase(u.getEmail()))
+                    .findFirst()
+                    .orElse(null);
+            
+            if (existingUser == null) {
+                System.out.println("User doesn't exist in the database: " + email);
+                return ResponseEntity.status(401).body("Invalid credentials - User not found");
+            } else {
+                System.out.println("User found manually: " + existingUser.getEmail());
+            }
+        } else {
+            System.out.println("User found with findByEmail: " + existingUser.getEmail());
         }
-        String token = jwtUtil.generateToken(email, user.getRole());
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("user", user);
-        return ResponseEntity.ok(response);
+        
+        try {
+            // Now proceed with authentication
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            
+            // User has been authenticated successfully
+            User user = existingUser;
+            
+            String token = jwtUtil.generateToken(email, user.getRole());
+            Map<String, Object> response = new HashMap<>();
+            response.put("token", token);
+            response.put("user", user);
+            System.out.println("Login successful for: " + email);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.out.println("Login error for " + email + ": " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(401).body("Invalid credentials - Authentication failed");
+        }
     }
 } 

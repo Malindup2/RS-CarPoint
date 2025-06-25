@@ -32,10 +32,16 @@ const Login: React.FC = () => {
         localStorage.setItem('token', data.token);
       }
       
+      // Extract user role from the response - user object is provided by the server
+      const userRole = data.user && data.user.role ? data.user.role : 'broker';
+      console.log('User role:', userRole);
+      
       // Redirect based on user role
-      if (data.role === 'admin') {
+      if (userRole === 'admin') {
+        console.log('Redirecting to admin dashboard');
         window.location.href = '/admin';
       } else {
+        console.log('Redirecting to broker dashboard');
         window.location.href = '/dashboard';
       }
     } catch (error) {

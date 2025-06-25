@@ -1,18 +1,24 @@
 package com.example.rscarpoint.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.stereotype.Component;
-
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import javax.crypto.SecretKey;
+
+import org.springframework.stereotype.Component;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
 @Component
 public class JwtUtil {
-    private final String SECRET_KEY = "rscarpoint_secret_key";
+    // Strong secret key with at least 32 characters (256 bits)
+    private final String SECRET_KEY_STRING = "iwhA90eZSx08P34LBAISIajeA3DnTf9w";
+    private final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(SECRET_KEY_STRING.getBytes(StandardCharsets.UTF_8));
     private final long EXPIRATION = 1000 * 60 * 60 * 10; // 10 hours
 
     public String extractUsername(String token) {
@@ -29,8 +35,9 @@ public class JwtUtil {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(SECRET_KEY)
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -46,13 +53,19 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
-                .compact();
+        try {
+            return Jwts.builder()
+                    .setClaims(claims)
+                    .setSubject(subject)
+                    .setIssuedAt(new Date(System.currentTimeMillis()))
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                    .signWith(SECRET_KEY)
+                    .compact();
+        } catch (Exception e) {
+            System.out.println("Error creating token: " + e.getMessage());
+            // Don't print stack trace in production code
+            return null;
+        }
     }
 
     public Boolean validateToken(String token, String username) {
