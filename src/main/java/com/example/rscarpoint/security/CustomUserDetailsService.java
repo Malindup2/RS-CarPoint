@@ -1,6 +1,7 @@
 package com.example.rscarpoint.security;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,10 +24,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         System.out.println("Attempting to load user with email: " + email);
         
         // First try with findByEmail
-        User user = userRepository.findByEmail(email);
+        Optional<User> userOptional = userRepository.findByEmail(email);
         
-        // If not found, try manually searching through all users
-        if (user == null) {
+        User user = null;
+        if (userOptional.isPresent()) {
+            user = userOptional.get();
+            System.out.println("User found with findByEmail: " + user.getEmail());
+        } else {
             System.out.println("User not found with findByEmail, trying manual search...");
             user = userRepository.findAll().stream()
                    .filter(u -> email.equalsIgnoreCase(u.getEmail()))
@@ -36,8 +40,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             if (user != null) {
                 System.out.println("User found via manual search: " + user.getEmail());
             }
-        } else {
-            System.out.println("User found with findByEmail: " + user.getEmail());
         }
         
         if (user == null) {

@@ -2,6 +2,7 @@ package com.example.rscarpoint.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +53,13 @@ public class AuthController {
         System.out.println("Login attempt for email: " + email);
         
         // Try to find the user manually first to check if it exists
-        User existingUser = userRepository.findByEmail(email);
-        if (existingUser == null) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        User existingUser = null;
+        
+        if (userOptional.isPresent()) {
+            existingUser = userOptional.get();
+            System.out.println("User found with findByEmail: " + existingUser.getEmail());
+        } else {
             System.out.println("User not found with findByEmail, trying manual search...");
             existingUser = userRepository.findAll().stream()
                     .filter(u -> email.equalsIgnoreCase(u.getEmail()))
@@ -66,8 +72,6 @@ public class AuthController {
             } else {
                 System.out.println("User found manually: " + existingUser.getEmail());
             }
-        } else {
-            System.out.println("User found with findByEmail: " + existingUser.getEmail());
         }
         
         try {
